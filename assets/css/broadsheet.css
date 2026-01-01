@@ -203,7 +203,7 @@ figure {
 }
 
 .masthead-tagline {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   font-style: italic;
   color: var(--color-text-muted);
   margin-bottom: var(--space-lg);
