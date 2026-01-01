@@ -248,11 +248,15 @@ The fonts included in `static/fonts/` are licensed under the [SIL Open Font Lice
 | [Libre Baskerville](https://github.com/impallari/Libre-Baskerville) | 2012 Pablo Impallari, Rodrigo Fuenzalida | `static/fonts/LICENSE-LibreBaskerville.txt` |
 | [Source Sans 3](https://github.com/adobe-fonts/source-sans) | 2010-2020 Adobe | `static/fonts/LICENSE-SourceSans.md` |
 
-### Icons
+### Icons (MIT License)
 
-- [Feather Icons](https://feathericons.com/) - MIT License (inline SVG, no files distributed)
+| Icon Set | Copyright | License File |
+|----------|-----------|--------------|
+| [Feather Icons](https://github.com/feathericons/feather) | 2013-2023 Cole Bemis | `static/fonts/LICENSE-FeatherIcons.txt` |
+
+Icons are embedded as inline SVG in templates (no external requests).
 
 ## Credits
 
 - Typography: [Libre Baskerville](https://github.com/impallari/Libre-Baskerville) by Pablo Impallari, [Source Sans](https://github.com/adobe-fonts/source-sans) by Adobe
-- Icons: [Feather Icons](https://feathericons.com/)
+- Icons: [Feather Icons](https://github.com/feathericons/feather) by Cole Bemis
