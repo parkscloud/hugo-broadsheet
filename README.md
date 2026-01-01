@@ -2,6 +2,8 @@
 
 A newspaper-style Hugo theme designed for news sites, magazines, and blogs that want the aesthetic of a traditional broadsheet newspaper with modern performance.
 
+> **Note:** This theme is in active development (v0.x). The API and features may change before v1.0 stable release.
+
 ## Features
 
 - **Newspaper-style masthead** with date, navigation, and site title
@@ -15,22 +17,62 @@ A newspaper-style Hugo theme designed for news sites, magazines, and blogs that 
 - **Reading time** estimates
 - **SEO optimized** with proper meta tags and semantic HTML
 
+## Requirements
+
+- Hugo Extended v0.112.0 or later (required for SCSS/CSS processing)
+- Git (for submodule installation)
+
 ## Installation
 
-### As a Git Submodule (Recommended)
+### Option 1: Git Submodule (Recommended)
+
+This method allows you to easily update the theme and track which version you're using.
+
+```bash
+# Navigate to your Hugo site
+cd your-hugo-site
+
+# Add the theme as a submodule
+git submodule add https://github.com/parkscloud/hugo-broadsheet.git themes/broadsheet
+
+# Initialize and update (if cloning a site that already has the submodule)
+git submodule update --init --recursive
+```
+
+To update the theme later:
+
+```bash
+git submodule update --remote themes/broadsheet
+```
+
+### Option 2: Git Clone
+
+If you want to modify the theme directly or don't want to use submodules:
 
 ```bash
 cd your-hugo-site
-git submodule add https://github.com/raparks/hugo-broadsheet.git themes/broadsheet
+git clone https://github.com/parkscloud/hugo-broadsheet.git themes/broadsheet
+
+# Remove .git to avoid nested repo issues
+rm -rf themes/broadsheet/.git
 ```
 
-### Manual Download
+### Option 3: Download ZIP
 
-Download the theme and extract it to your `themes/broadsheet` directory.
+1. Download the [latest release](https://github.com/parkscloud/hugo-broadsheet/releases) or [main branch ZIP](https://github.com/parkscloud/hugo-broadsheet/archive/refs/heads/main.zip)
+2. Extract to `your-hugo-site/themes/broadsheet/`
+
+### After Installation
+
+Add to your `hugo.toml`:
+
+```toml
+theme = 'broadsheet'
+```
 
 ## Configuration
 
-Add to your `hugo.toml`:
+Full configuration example for `hugo.toml`:
 
 ```toml
 theme = 'broadsheet'
@@ -147,6 +189,19 @@ Broadsheet is built for speed:
 - Mobile browsers (iOS Safari, Chrome for Android)
 - Graceful degradation for older browsers
 
+## Versioning
+
+This project uses [Semantic Versioning](https://semver.org/):
+
+- **0.x.y** - Development releases (current)
+  - `0.1.0` - Initial release
+  - `0.x.0` - New features, may include breaking changes
+  - `0.x.y` - Bug fixes and minor improvements
+- **1.0.0** - First stable release (when feature-complete and battle-tested)
+- **1.x.y** - Stable releases with backward compatibility
+
+**Current status:** Pre-release development. Expect changes to templates, CSS classes, and configuration options before v1.0.
+
 ## Development
 
 To develop the theme locally:
@@ -155,6 +210,10 @@ To develop the theme locally:
 cd hugo-broadsheet/exampleSite
 hugo server --themesDir ../..
 ```
+
+## Contributing
+
+Contributions are welcome! Please open an issue to discuss changes before submitting a PR.
 
 ## License
 
