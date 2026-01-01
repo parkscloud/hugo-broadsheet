@@ -1,0 +1,30 @@
+{{ define "main" }}
+<div class="error-page">
+  <h1 class="error-title">404</h1>
+  <p class="error-message">Page not found</p>
+  <a href="{{ .Site.BaseURL }}" class="error-link">Return to homepage</a>
+</div>
+
+<style>
+  .error-page {
+    text-align: center;
+    padding: var(--space-3xl) var(--space-lg);
+  }
+  .error-title {
+    font-size: clamp(4rem, 10vw, 8rem);
+    margin-bottom: var(--space-md);
+  }
+  .error-message {
+    font-size: var(--text-xl);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-xl);
+  }
+  .error-link {
+    font-weight: 600;
+    text-decoration: underline;
+  }
+  .error-link:hover {
+    color: var(--color-accent);
+  }
+</style>
+{{ end }}

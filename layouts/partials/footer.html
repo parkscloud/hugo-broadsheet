@@ -1,0 +1,15 @@
+<footer class="footer">
+  <div class="footer-rule"></div>
+  <div class="footer-content">
+    <div class="footer-copyright">
+      &copy; {{ now.Year }} {{ .Site.Title }}
+    </div>
+    {{- if .Site.Params.footerLinks }}
+    <nav class="footer-nav">
+      {{- range .Site.Params.footerLinks }}
+      <a href="{{ .url }}">{{ .name }}</a>
+      {{- end }}
+    </nav>
+    {{- end }}
+  </div>
+</footer>

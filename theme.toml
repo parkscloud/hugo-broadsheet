@@ -1,0 +1,12 @@
+name = "Broadsheet"
+license = "MIT"
+licenselink = "https://github.com/raparks/hugo-broadsheet/blob/main/LICENSE"
+description = "A newspaper-style Hugo theme for news sites and blogs"
+homepage = "https://github.com/raparks/hugo-broadsheet"
+tags = ["newspaper", "news", "magazine", "blog", "responsive", "minimal", "fast"]
+features = ["newspaper layout", "featured articles", "sections", "responsive", "dark mode", "search"]
+min_version = "0.112.0"
+
+[author]
+  name = "raparks"
+  homepage = "https://github.com/raparks"

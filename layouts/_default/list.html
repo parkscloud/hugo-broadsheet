@@ -1,0 +1,40 @@
+{{ define "main" }}
+<div class="list-page">
+  <header class="list-header">
+    <h1 class="list-title">{{ .Title }}</h1>
+    {{- if .Description }}
+    <p class="list-description">{{ .Description }}</p>
+    {{- end }}
+  </header>
+
+  <div class="stories-list">
+    {{- range .Pages }}
+    <article class="story-item">
+      <a href="{{ .Permalink }}">
+        <div class="story-item-content">
+          {{- if .Params.section }}
+          <span class="article-section">{{ .Params.section }}</span>
+          {{- end }}
+          <h2 class="story-item-headline">{{ .Title }}</h2>
+          {{- if .Params.summary }}
+          <p class="story-item-summary">{{ .Params.summary }}</p>
+          {{- else if .Summary }}
+          <p class="story-item-summary">{{ .Summary }}</p>
+          {{- end }}
+          <div class="article-meta">
+            {{- if .Params.author }}
+            <span class="article-author">By {{ .Params.author }}</span>
+            {{- end }}
+          </div>
+        </div>
+        <time datetime="{{ .Date.Format "2006-01-02" }}">
+          {{ .Date.Format "Jan 2, 2006" }}
+        </time>
+      </a>
+    </article>
+    {{- end }}
+  </div>
+
+  {{- template "_internal/pagination.html" . }}
+</div>
+{{ end }}

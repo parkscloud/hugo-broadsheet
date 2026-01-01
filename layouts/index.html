@@ -1,0 +1,99 @@
+{{ define "main" }}
+<div class="frontpage">
+
+  {{- /* Featured/Lead Story */ -}}
+  {{- $featured := where .Site.RegularPages "Params.featured" true }}
+  {{- $lead := index (first 1 (default .Site.RegularPages $featured)) 0 }}
+
+  {{- if $lead }}
+  <article class="lead-story">
+    <a href="{{ $lead.Permalink }}">
+      {{- if $lead.Params.image }}
+      <figure class="lead-story-image">
+        <img src="{{ $lead.Params.image }}" alt="{{ $lead.Title }}" loading="eager">
+      </figure>
+      {{- end }}
+      <div class="lead-story-content">
+        {{- if $lead.Params.section }}
+        <span class="article-section">{{ $lead.Params.section }}</span>
+        {{- end }}
+        <h2 class="lead-story-headline">{{ $lead.Title }}</h2>
+        {{- if $lead.Params.summary }}
+        <p class="lead-story-summary">{{ $lead.Params.summary }}</p>
+        {{- else if $lead.Summary }}
+        <p class="lead-story-summary">{{ $lead.Summary }}</p>
+        {{- end }}
+        <div class="article-meta">
+          {{- if $lead.Params.author }}
+          <span class="article-author">By {{ $lead.Params.author }}</span>
+          {{- end }}
+          <time datetime="{{ $lead.Date.Format "2006-01-02" }}">
+            {{ $lead.Date.Format "January 2, 2006" }}
+          </time>
+        </div>
+      </div>
+    </a>
+  </article>
+  {{- end }}
+
+  {{- /* Secondary Stories Grid */ -}}
+  {{- $remaining := after 1 (default .Site.RegularPages $featured) }}
+  {{- $secondary := first 4 $remaining }}
+
+  {{- if $secondary }}
+  <div class="secondary-stories">
+    {{- range $secondary }}
+    <article class="story-card">
+      <a href="{{ .Permalink }}">
+        {{- if .Params.image }}
+        <figure class="story-card-image">
+          <img src="{{ .Params.image }}" alt="{{ .Title }}" loading="lazy">
+        </figure>
+        {{- end }}
+        <div class="story-card-content">
+          {{- if .Params.section }}
+          <span class="article-section">{{ .Params.section }}</span>
+          {{- end }}
+          <h3 class="story-card-headline">{{ .Title }}</h3>
+          <div class="article-meta">
+            <time datetime="{{ .Date.Format "2006-01-02" }}">
+              {{ .Date.Format "Jan 2" }}
+            </time>
+          </div>
+        </div>
+      </a>
+    </article>
+    {{- end }}
+  </div>
+  {{- end }}
+
+  {{- /* Latest Stories List */ -}}
+  {{- $latest := after 5 .Site.RegularPages }}
+  {{- if $latest }}
+  <section class="latest-stories">
+    <h2 class="section-header">Latest</h2>
+    <div class="stories-list">
+      {{- range first 10 $latest }}
+      <article class="story-item">
+        <a href="{{ .Permalink }}">
+          <div class="story-item-content">
+            {{- if .Params.section }}
+            <span class="article-section">{{ .Params.section }}</span>
+            {{- end }}
+            <h3 class="story-item-headline">{{ .Title }}</h3>
+            {{- if .Params.summary }}
+            <p class="story-item-summary">{{ .Params.summary }}</p>
+            {{- end }}
+          </div>
+          <time datetime="{{ .Date.Format "2006-01-02" }}">
+            {{ .Date.Format "Jan 2" }}
+          </time>
+        </a>
+      </article>
+      {{- end }}
+    </div>
+  </section>
+  {{- end }}
+
+</div>
+{{ end }}

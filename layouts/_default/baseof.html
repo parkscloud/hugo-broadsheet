@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en" }}">
+<head>
+  {{- partial "head.html" . -}}
+</head>
+<body class="{{ if .IsHome }}home{{ end }}">
+  {{- partial "masthead.html" . -}}
+
+  <main class="main">
+    {{- block "main" . }}{{- end }}
+  </main>
+
+  {{- partial "footer.html" . -}}
+
+  {{- if .Site.Params.enableSearch }}
+  {{- partial "search.html" . -}}
+  {{- end }}
+</body>
+</html>
