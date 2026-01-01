@@ -1,9 +1,12 @@
 {{ define "main" }}
 <div class="frontpage">
 
+  {{- /* Get all posts */ -}}
+  {{- $posts := where .Site.RegularPages "Section" "posts" }}
+
   {{- /* Featured/Lead Story */ -}}
-  {{- $featured := where .Site.RegularPages "Params.featured" true }}
-  {{- $lead := index (first 1 (default .Site.RegularPages $featured)) 0 }}
+  {{- $featured := where $posts "Params.featured" true }}
+  {{- $lead := index (first 1 (default $posts $featured)) 0 }}
 
   {{- if $lead }}
   <article class="lead-story">
@@ -37,7 +40,7 @@
   {{- end }}
 
   {{- /* Secondary Stories Grid */ -}}
-  {{- $remaining := after 1 (default .Site.RegularPages $featured) }}
+  {{- $remaining := where $posts "Permalink" "!=" $lead.Permalink }}
   {{- $secondary := first 4 $remaining }}
 
   {{- if $secondary }}
@@ -68,7 +71,7 @@
   {{- end }}
 
   {{- /* Latest Stories List */ -}}
-  {{- $latest := after 5 .Site.RegularPages }}
+  {{- $latest := after 5 $posts }}
   {{- if $latest }}
   <section class="latest-stories">
     <h2 class="section-header">Latest</h2>
