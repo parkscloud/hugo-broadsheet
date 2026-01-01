@@ -16,6 +16,10 @@
 {{- /* Canonical */ -}}
 <link rel="canonical" href="{{ .Permalink }}">
 
+{{- /* OpenGraph and Twitter Cards */ -}}
+{{ template "_internal/opengraph.html" . }}
+{{ template "_internal/twitter_cards.html" . }}
+
 {{- /* Favicons */ -}}
 <link rel="icon" type="image/x-icon" href="{{ "favicon.ico" | relURL }}">
 <link rel="icon" type="image/png" sizes="16x16" href="{{ "favicon-16x16.png" | relURL }}">
