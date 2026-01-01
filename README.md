@@ -145,6 +145,35 @@ tags: ["breaking", "tech"]
 | `featured` | Set `true` to make this the lead story |
 | `tags` | Array of tags for categorization |
 
+### Images
+
+All images in Broadsheet use a **16:9 aspect ratio** with `object-fit: cover`. This applies to:
+- Article hero images
+- Lead story images on homepage
+- Story card thumbnails
+
+**Recommended specifications:**
+
+| Spec | Value |
+|------|-------|
+| Aspect ratio | 16:9 |
+| Dimensions | 1200×675 px |
+| Format | WebP (preferred), JPEG |
+| Max file size | 150 KB |
+
+**Usage in front matter:**
+
+```yaml
+image: "/images/posts/my-article.webp"
+imageCaption: "Photo credit or description"
+```
+
+**Preparation tips:**
+- Crop to 16:9 before uploading to avoid unexpected cropping
+- Use WebP for best compression; JPEG as fallback
+- Compress images to under 150KB for fast mobile loading
+- Store in `static/images/` and reference with absolute paths
+
 ## Homepage Layout
 
 The homepage displays articles in a newspaper-style layout:
