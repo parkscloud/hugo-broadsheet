@@ -4,6 +4,9 @@
     <div class="footer-copyright">
       &copy; {{ now.Year }} {{ .Site.Title }}
     </div>
+    <div class="footer-powered">
+      Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &amp; <a href="https://github.com/parkscloud/hugo-broadsheet" target="_blank" rel="noopener">Broadsheet</a>
+    </div>
     {{- if .Site.Params.footerLinks }}
     <nav class="footer-nav">
       {{- range .Site.Params.footerLinks }}

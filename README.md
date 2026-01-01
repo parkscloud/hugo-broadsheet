@@ -1,6 +1,6 @@
 # Broadsheet
 
-A newspaper-style Hugo theme designed for news sites, magazines, and blogs that want the aesthetic of a traditional broadsheet newspaper with modern performance.
+A newspaper-style [Hugo](https://gohugo.io/) theme designed for news sites, magazines, and blogs that want the aesthetic of a traditional broadsheet newspaper with modern performance.
 
 > **Note:** This theme is in active development (v0.x). The API and features may change before v1.0 stable release.
 
@@ -217,12 +217,25 @@ This project uses [Semantic Versioning](https://semver.org/):
 
 ## Development
 
-To develop the theme locally:
+### Running the Example Site
+
+The `exampleSite/` directory contains a complete demo site. To run it locally:
 
 ```bash
 cd hugo-broadsheet/exampleSite
-hugo server --themesDir ../..
+hugo server --themesDir /path/to/parent/of/hugo-broadsheet
 ```
+
+For example, if your theme is at `/home/user/repos/hugo-broadsheet`:
+
+```bash
+cd /home/user/repos/hugo-broadsheet/exampleSite
+hugo server --themesDir /home/user/repos
+```
+
+### Theme Development
+
+When making changes to the theme, the example site will live-reload automatically.
 
 ## Contributing
 
