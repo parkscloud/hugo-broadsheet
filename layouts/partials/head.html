@@ -4,14 +4,7 @@
 
 <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
 
-{{- /* Preload critical assets */ -}}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-{{- /* Typography: Libre Baskerville for headlines, Source Sans for body */ -}}
-<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
-
-{{- /* Theme CSS */ -}}
+{{- /* Theme CSS - includes self-hosted fonts */ -}}
 {{- $css := resources.Get "css/broadsheet.css" | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $css.Permalink }}" integrity="{{ $css.Data.Integrity }}">
 

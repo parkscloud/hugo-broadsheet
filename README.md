@@ -179,19 +179,20 @@ Override CSS custom properties in your own stylesheet:
 
 ### Typography
 
-The theme uses Google Fonts by default:
+Fonts are self-hosted for performance and privacy (no external requests):
 - **Headlines:** Libre Baskerville (serif)
 - **Body:** Source Sans 3 (sans-serif)
 
-To use different fonts, override the CSS custom properties and update the font imports in a custom `head.html` partial.
+To use different fonts, replace the files in `static/fonts/` and update the `@font-face` declarations in `assets/css/broadsheet.css`.
 
 ## Performance
 
 Broadsheet is built for speed:
 
 - **Zero JavaScript** for core functionality (dark mode via CSS media queries)
+- **Self-hosted fonts** - no external requests to Google or other CDNs
 - CSS-only layouts (no CSS frameworks)
-- System font fallbacks
+- System font fallbacks for fast initial render
 - Responsive images with lazy loading
 - Minified output when built with `hugo --minify`
 
@@ -231,7 +232,27 @@ Contributions are welcome! Please open an issue to discuss changes before submit
 
 MIT License - see [LICENSE](LICENSE) for details.
 
+## Third-Party Licenses
+
+This theme includes the following third-party assets, which are distributed under their respective open-source licenses:
+
+### Fonts (SIL Open Font License 1.1)
+
+The fonts included in `static/fonts/` are licensed under the [SIL Open Font License 1.1](https://scripts.sil.org/OFL), which permits:
+- Free use in personal and commercial projects
+- Modification and redistribution
+- Bundling with other software
+
+| Font | Copyright | License File |
+|------|-----------|--------------|
+| [Libre Baskerville](https://github.com/impallari/Libre-Baskerville) | 2012 Pablo Impallari, Rodrigo Fuenzalida | `static/fonts/LICENSE-LibreBaskerville.txt` |
+| [Source Sans 3](https://github.com/adobe-fonts/source-sans) | 2010-2020 Adobe | `static/fonts/LICENSE-SourceSans.md` |
+
+### Icons
+
+- [Feather Icons](https://feathericons.com/) - MIT License (inline SVG, no files distributed)
+
 ## Credits
 
-- Typography: [Google Fonts](https://fonts.google.com/)
-- Icons: [Feather Icons](https://feathericons.com/) (inline SVG)
+- Typography: [Libre Baskerville](https://github.com/impallari/Libre-Baskerville) by Pablo Impallari, [Source Sans](https://github.com/adobe-fonts/source-sans) by Adobe
+- Icons: [Feather Icons](https://feathericons.com/)
