@@ -44,16 +44,18 @@
   --content-width: 720px;
 }
 
-/* Dark mode */
-.dark {
-  --color-bg: #1a1a1a;
-  --color-bg-alt: #242424;
-  --color-text: #e8e6e3;
-  --color-text-muted: #a8a8a8;
-  --color-text-faint: #777;
-  --color-accent: #e85d75;
-  --color-rule: #e8e6e3;
-  --color-rule-light: #333;
+/* Dark mode - follows system preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #1a1a1a;
+    --color-bg-alt: #242424;
+    --color-text: #e8e6e3;
+    --color-text-muted: #a8a8a8;
+    --color-text-faint: #777;
+    --color-accent: #e85d75;
+    --color-rule: #e8e6e3;
+    --color-rule-light: #333;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -143,11 +145,6 @@ figure {
   color: var(--color-text);
 }
 
-/* Theme toggle icons */
-.dark .icon-sun { display: block; }
-.dark .icon-moon { display: none; }
-.icon-sun { display: none; }
-.icon-moon { display: block; }
 
 .masthead-title {
   font-family: var(--font-headline);

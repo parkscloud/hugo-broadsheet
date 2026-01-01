@@ -10,7 +10,7 @@ A newspaper-style Hugo theme designed for news sites, magazines, and blogs that 
 - **Multi-column grid layouts** for homepage stories
 - **Featured article support** for lead stories
 - **Responsive design** optimized for mobile reading
-- **Dark mode** with automatic system detection
+- **Dark mode** follows system preference automatically, respecting individual user settings
 - **Fast performance** - minimal JavaScript, optimized CSS
 - **Clean typography** using Libre Baskerville (headlines) and Source Sans (body)
 - **Section labels** for categorizing articles
@@ -151,6 +151,19 @@ The homepage displays articles in a newspaper-style layout:
 2. **Secondary Stories** - Next 4 articles in a grid
 3. **Latest Stories** - Remaining articles in a list format
 
+## Dark Mode
+
+Broadsheet automatically adapts to the user's system preference using CSS media queries (`prefers-color-scheme`). There is no manual toggle—the theme respects whatever the user has configured on their device:
+
+- **iOS/Android** users with auto-switching see the theme change with sunrise/sunset
+- **Users who prefer dark mode** always see the dark theme
+- **Default system users** see the light theme
+
+This approach:
+- Respects individual user preferences without requiring interaction
+- Eliminates JavaScript for theme switching
+- Works immediately on first page load (no flash of wrong theme)
+
 ## Customization
 
 ### Colors
@@ -176,8 +189,7 @@ To use different fonts, override the CSS custom properties and update the font i
 
 Broadsheet is built for speed:
 
-- No JavaScript frameworks
-- Minimal inline JavaScript for dark mode toggle
+- **Zero JavaScript** for core functionality (dark mode via CSS media queries)
 - CSS-only layouts (no CSS frameworks)
 - System font fallbacks
 - Responsive images with lazy loading
