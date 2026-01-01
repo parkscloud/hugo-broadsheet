@@ -173,6 +173,7 @@ imageCaption: "Photo credit or description"
 - Use WebP for best compression; JPEG as fallback
 - Compress images to under 150KB for fast mobile loading
 - Store in `static/images/` and reference with absolute paths
+- Use [Squoosh](https://squoosh.app/) for easy browser-based conversion with visual comparison
 
 ## Homepage Layout
 
