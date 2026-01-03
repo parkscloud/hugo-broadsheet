@@ -583,6 +583,47 @@ figure {
   background: var(--color-rule-light);
 }
 
+/* Article Share Buttons */
+.article-share {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+.article-share-label {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-faint);
+}
+
+.article-share-buttons {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.share-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-bg-alt);
+  color: var(--color-text-muted);
+  transition: background 0.2s, color 0.2s;
+}
+
+.share-button:hover {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.share-button svg {
+  display: block;
+}
+
 /* Article Navigation */
 .article-nav {
   margin-top: var(--space-2xl);
