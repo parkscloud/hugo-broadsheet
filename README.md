@@ -181,7 +181,7 @@ The homepage displays articles in a newspaper-style layout:
 
 1. **Lead Story** - The most recent `featured: true` article (or most recent if none featured)
 2. **Secondary Stories** - Next 4 articles in a grid
-3. **Latest Stories** - Remaining articles in a list format
+3. **Earlier** - Remaining articles in a list format (appears when you have more than 5 posts)
 
 ## Dark Mode
 
