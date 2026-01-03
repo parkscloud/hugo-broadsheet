@@ -279,6 +279,10 @@ figure {
     grid-template-columns: 1.5fr 1fr;
     align-items: start;
   }
+
+  .lead-story--no-image a {
+    grid-template-columns: 1fr;
+  }
 }
 
 .lead-story-image img {

@@ -9,7 +9,7 @@
   {{- $lead := index (first 1 (default $posts $featured)) 0 }}
 
   {{- if $lead }}
-  <article class="lead-story">
+  <article class="lead-story{{ if not $lead.Params.image }} lead-story--no-image{{ end }}">
     <a href="{{ $lead.Permalink }}">
       {{- if $lead.Params.image }}
       <figure class="lead-story-image">
