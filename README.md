@@ -187,6 +187,8 @@ The homepage displays articles in a newspaper-style layout:
 2. **Secondary Stories** - Next 4 articles in a grid
 3. **Earlier** - Remaining articles in a list format (appears when you have more than 5 posts)
 
+**Lead story layout:** When the featured post has an image, the layout is two-column (content + image). Without an image, content spans full width.
+
 ## Dark Mode
 
 Broadsheet automatically adapts to the user's system preference using CSS media queries (`prefers-color-scheme`). There is no manual toggle—the theme respects whatever the user has configured on their device:
