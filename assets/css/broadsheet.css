@@ -740,6 +740,7 @@ figure {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: var(--space-lg);
+  margin-bottom: var(--space-2xl);
 }
 
 .section-card {
