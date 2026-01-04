@@ -1,0 +1,41 @@
+{{ define "main" }}
+<div class="sections-page">
+  <header class="list-header">
+    <h1 class="list-title">{{ .Title }}</h1>
+  </header>
+
+  {{- /* Group posts by section param */ -}}
+  {{- $pages := where site.RegularPages "Section" "posts" }}
+  {{- $grouped := $pages.GroupByParam "section" }}
+
+  <div class="sections-grid">
+    {{- range $grouped }}
+    <a href="#{{ .Key | urlize }}" class="section-card">
+      <h2 class="section-card-title">{{ .Key }}</h2>
+      <p class="section-card-count">{{ len .Pages }} {{ if eq (len .Pages) 1 }}post{{ else }}posts{{ end }}</p>
+    </a>
+    {{- end }}
+  </div>
+
+  {{- /* List posts by section */ -}}
+  {{- range $grouped }}
+  <div class="archives-year" id="{{ .Key | urlize }}">
+    <h2 class="archives-year-heading">{{ .Key }}</h2>
+    <div class="stories-list">
+      {{- range .Pages }}
+      <article class="story-item">
+        <a href="{{ .Permalink }}">
+          <div class="story-item-content">
+            <h3 class="story-item-headline">{{ .Title }}</h3>
+          </div>
+          <time datetime="{{ .Date.Format "2006-01-02" }}">
+            {{ .Date.Format "Jan 2, 2006" }}
+          </time>
+        </a>
+      </article>
+      {{- end }}
+    </div>
+  </div>
+  {{- end }}
+</div>
+{{ end }}
