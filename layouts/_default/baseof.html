@@ -15,5 +15,19 @@
   {{- if .Site.Params.enableSearch }}
   {{- partial "search.html" . -}}
   {{- end }}
+
+  {{- with .Site.Params.stalepagereloadminutes }}
+  <script>
+  (function() {
+    var loadTime = Date.now();
+    var staleAfter = {{ . }} * 60 * 1000;
+    document.addEventListener('visibilitychange', function() {
+      if (!document.hidden && (Date.now() - loadTime) > staleAfter) {
+        location.reload();
+      }
+    });
+  })();
+  </script>
+  {{- end }}
 </body>
 </html>
