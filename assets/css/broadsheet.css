@@ -350,18 +350,26 @@ figure {
 /* Latest Stories List */
 .latest-stories {
   border-top: 3px solid var(--color-rule);
-  padding-top: var(--space-md);
+  padding-top: var(--space-sm);
 }
 
 .section-header {
   font-family: var(--font-body);
   font-size: var(--text-sm);
   font-weight: 600;
+  line-height: inherit;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  margin-bottom: 0;
+}
+
+.section-header::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background: var(--color-rule);
+  margin-top: var(--space-sm);
   margin-bottom: var(--space-lg);
-  padding-bottom: var(--space-sm);
-  border-bottom: 1px solid var(--color-rule);
 }
 
 .stories-list {
