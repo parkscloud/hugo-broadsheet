@@ -1,8 +1,15 @@
 <header class="masthead">
   <div class="masthead-top">
-    <div class="masthead-date">
+    <div class="masthead-date" id="masthead-date">
       {{ now | time.Format "Monday, January 2, 2006" }}
     </div>
+    <script>
+      (function() {
+        var d = new Date();
+        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('masthead-date').textContent = d.toLocaleDateString('en-US', options);
+      })();
+    </script>
     {{- if .Site.Params.enableSearch }}
     <div class="masthead-controls">
       <button id="search-toggle" aria-label="Search" title="Search">
