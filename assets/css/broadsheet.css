@@ -171,6 +171,12 @@ figure {
   margin-bottom: var(--space-md);
 }
 
+@media (max-width: 767px) {
+  .masthead-top {
+    justify-content: center;
+  }
+}
+
 .masthead-controls {
   display: flex;
   gap: var(--space-sm);
