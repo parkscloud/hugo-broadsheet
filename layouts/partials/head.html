@@ -16,9 +16,38 @@
 {{- /* Canonical */ -}}
 <link rel="canonical" href="{{ .Permalink }}">
 
-{{- /* OpenGraph and Twitter Cards */ -}}
-{{ template "_internal/opengraph.html" . }}
-{{ template "_internal/twitter_cards.html" . }}
+{{- /* OpenGraph */ -}}
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:site_name" content="{{ .Site.Title }}">
+<meta property="og:title" content="{{ .Title }}">
+<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}{{ end }}">
+<meta property="og:locale" content="{{ .Site.Language.LanguageCode | default "en_us" | replaceRE "-" "_" }}">
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+{{- if .IsPage }}
+<meta property="article:section" content="{{ .Section }}">
+<meta property="article:published_time" content="{{ .PublishDate.Format "2006-01-02T15:04:05-07:00" }}">
+<meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" }}">
+{{- range .Params.tags }}
+<meta property="article:tag" content="{{ . }}">
+{{- end }}
+{{- end }}
+{{- /* Use article image if available, otherwise site default */ -}}
+{{- $baseURL := .Site.BaseURL | strings.TrimSuffix "/" -}}
+{{- if .Params.image -}}
+<meta property="og:image" content="{{ $baseURL }}{{ .Params.image }}">
+{{- else -}}
+<meta property="og:image" content="{{ $baseURL }}/og-image.png">
+{{- end }}
+
+{{- /* Twitter Cards */ -}}
+<meta name="twitter:card" content="summary_large_image">
+{{- if .Params.image -}}
+<meta name="twitter:image" content="{{ $baseURL }}{{ .Params.image }}">
+{{- else -}}
+<meta name="twitter:image" content="{{ $baseURL }}/og-image.png">
+{{- end }}
+<meta name="twitter:title" content="{{ .Title }}">
+<meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}{{ end }}">
 
 {{- /* Favicons */ -}}
 <link rel="icon" type="image/x-icon" href="{{ "favicon.ico" | relURL }}">
