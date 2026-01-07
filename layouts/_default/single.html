@@ -26,7 +26,14 @@
 
   {{- if .Params.image }}
   <figure class="article-image">
+    {{- if strings.HasSuffix .Params.image ".webp" }}
+    <picture>
+      <source srcset="{{ .Params.image }}" type="image/webp">
+      <img src="{{ replace .Params.image ".webp" ".png" }}" alt="{{ .Title }}">
+    </picture>
+    {{- else }}
     <img src="{{ .Params.image }}" alt="{{ .Title }}">
+    {{- end }}
     {{- if .Params.imageCaption }}
     <figcaption>{{ .Params.imageCaption }}</figcaption>
     {{- end }}
