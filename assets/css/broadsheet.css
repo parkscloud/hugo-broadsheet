@@ -812,8 +812,14 @@ figure {
   text-decoration: underline;
 }
 
+.cc-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  margin-right: 0.125em;
+}
+
 .footer-powered {
-  font-size: var(--text-xs);
   color: var(--color-text-faint);
 }
 

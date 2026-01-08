@@ -223,6 +223,18 @@ When disabled (default), no share UI appears on article pages.
 
 ## Customization
 
+### Footer
+
+The footer includes a `.cc-icon` class for Creative Commons icons. To add CC license icons to your footer, use inline SVGs in your `layouts/partials/footer.html`:
+
+```html
+<svg class="cc-icon" viewBox="0 0 24 24"><!-- CC icon path --></svg>
+<svg class="cc-icon" viewBox="0 0 24 24"><!-- BY icon path --></svg>
+CC BY 4.0
+```
+
+The icons automatically scale with text size and inherit the link color.
+
 ### Colors
 
 Override CSS custom properties in your own stylesheet:
