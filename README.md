@@ -338,6 +338,18 @@ The fonts included in `static/fonts/` are licensed under the [SIL Open Font Lice
 
 Icons are embedded as inline SVG in templates (no external requests).
 
+## Changelog
+
+### v0.3.7 - 2026-01-09
+- Standardized footer link styling: all links now show color change on hover without underlines
+
+### v0.3.6 - 2026-01-07
+- Added markdown render hook for external links opening in new tabs
+
+### v0.3.0 - 2026-01-01
+- Title format updated to show site name before page name
+- Various layout and typography refinements
+
 ## Credits
 
 - Typography: [Libre Baskerville](https://github.com/impallari/Libre-Baskerville) by Pablo Impallari, [Source Sans](https://github.com/adobe-fonts/source-sans) by Adobe

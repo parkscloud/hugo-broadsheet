@@ -809,7 +809,7 @@ figure {
 }
 
 .footer-copyright a:hover {
-  text-decoration: underline;
+  color: var(--color-text);
 }
 
 .cc-icon {
@@ -825,8 +825,6 @@ figure {
 
 .footer-powered a {
   color: var(--color-text-muted);
-  text-decoration: underline;
-  text-underline-offset: 2px;
 }
 
 .footer-powered a:hover {
