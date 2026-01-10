@@ -1,27 +1,56 @@
 {{ define "main" }}
 <div class="error-page">
   <h1 class="error-title">404</h1>
-  <p class="error-message">Page not found</p>
+  <p class="error-subtitle">Page Not Found</p>
+
+  <div class="error-explanation">
+    <p>You've encountered HTTP status code 404—the web's way of saying "there's nothing here."</p>
+
+    <p>The number isn't arbitrary. When Tim Berners-Lee and his team at CERN defined HTTP in 1992, they organized status codes into classes: 2xx for success, 3xx for redirects, 4xx for client errors, and 5xx for server errors. Within the 4xx class, 404 was assigned to "Not Found"—meaning the server understood your request but couldn't locate the resource.</p>
+
+    <p>There's a persistent myth that 404 was named after Room 404 at CERN, where the first web servers allegedly lived. It's a good story, but it's not true. The code is simply the fourth error in the fourth class of HTTP responses.</p>
+
+    <p>The page you're looking for may have been moved, renamed, or never existed. But the rest of the site is still here.</p>
+  </div>
+
   <a href="{{ .Site.BaseURL }}" class="error-link">Return to homepage</a>
 </div>
 
 <style>
   .error-page {
     text-align: center;
-    padding: var(--space-3xl) var(--space-lg);
+    padding: var(--space-2xl) var(--space-lg);
+    max-width: 40rem;
+    margin: 0 auto;
   }
   .error-title {
-    font-size: clamp(4rem, 10vw, 8rem);
-    margin-bottom: var(--space-md);
+    font-size: clamp(4rem, 10vw, 6rem);
+    margin-bottom: var(--space-xs);
+    line-height: 1;
   }
-  .error-message {
+  .error-subtitle {
     font-size: var(--text-xl);
     color: var(--color-text-muted);
     margin-bottom: var(--space-xl);
+    font-style: italic;
+  }
+  .error-explanation {
+    text-align: left;
+    margin-bottom: var(--space-xl);
+    font-size: var(--text-base);
+    line-height: 1.7;
+  }
+  .error-explanation p {
+    margin-bottom: var(--space-md);
+  }
+  .error-explanation p:last-child {
+    margin-bottom: 0;
   }
   .error-link {
+    display: inline-block;
     font-weight: 600;
     text-decoration: underline;
+    margin-top: var(--space-md);
   }
   .error-link:hover {
     color: var(--color-accent);
