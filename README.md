@@ -291,6 +291,16 @@ Broadsheet is built for speed:
 - Responsive images with lazy loading
 - Minified output when built with `hugo --minify`
 
+## SEO
+
+Broadsheet follows SEO best practices:
+
+- **Proper H1 structure** — The site title renders as `<h1>` on the homepage only; inner pages use `<h1>` for the article title
+- **Open Graph tags** — Article images and descriptions are included for social sharing
+- **Twitter Cards** — Large image cards for better visibility when shared
+- **Semantic HTML** — Proper use of `<article>`, `<header>`, `<nav>`, `<footer>`, and `<time>` elements
+- **Canonical URLs** — Prevents duplicate content issues
+
 ## Browser Support
 
 - Chrome, Firefox, Safari, Edge (latest versions)

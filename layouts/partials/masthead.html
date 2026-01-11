@@ -19,9 +19,15 @@
     {{- end }}
   </div>
 
+  {{- if .IsHome }}
+  <h1 class="masthead-title">
+    <a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
+  </h1>
+  {{- else }}
   <div class="masthead-title">
     <a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
   </div>
+  {{- end }}
 
   {{- if .Site.Params.tagline }}
   <div class="masthead-tagline">{{ .Site.Params.tagline }}</div>
