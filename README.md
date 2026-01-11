@@ -254,6 +254,32 @@ Fonts are self-hosted for performance and privacy (no external requests):
 
 To use different fonts, replace the files in `static/fonts/` and update the `@font-face` declarations in `assets/css/broadsheet.css`.
 
+### Callout Boxes
+
+Use the `.callout` class to highlight example content, notes, or other material that should stand out from the main text. Callouts display with a shaded background and subtle left border.
+
+**Usage in markdown:**
+
+```html
+<div class="callout">
+
+Your content here. Markdown formatting works inside the div,
+but you need a blank line after the opening tag.
+
+- Lists work
+- **Bold** and *italic* work
+- Headers work
+
+</div>
+```
+
+**Note:** Hugo requires `unsafe = true` in your markup configuration for raw HTML in markdown:
+
+```toml
+[markup.goldmark.renderer]
+  unsafe = true
+```
+
 ## Performance
 
 Broadsheet is built for speed:
