@@ -13,7 +13,7 @@ A newspaper-style [Hugo](https://gohugo.io/) theme designed for news sites, maga
 - **Featured article support** for lead stories
 - **Responsive design** optimized for mobile reading
 - **Dark mode** follows system preference automatically, respecting individual user settings
-- **Share buttons** for LinkedIn, Facebook, and X (optional, zero JavaScript)
+- **Share buttons** for LinkedIn, Facebook, X, and Reddit (optional, zero JavaScript)
 - **Fast performance** - minimal JavaScript, optimized CSS
 - **Clean typography** using Libre Baskerville (headlines) and Source Sans (body)
 - **Section labels** for categorizing articles
@@ -211,12 +211,12 @@ Optional social sharing buttons appear at the end of articles when enabled:
   enableShareButtons = true
 ```
 
-**Supported platforms:** LinkedIn, Facebook, X (Twitter)
+**Supported platforms:** LinkedIn, Facebook, X (Twitter), Reddit
 
 **Implementation details:**
 - Zero JavaScript—uses simple share URLs that open each platform's share dialog
 - No tracking scripts or external requests
-- Icons from Feather Icons (inline SVG, MIT licensed)
+- Icons use inline SVG (Feather Icons style, MIT licensed)
 - Styled as subtle circular buttons that match the theme
 
 When disabled (default), no share UI appears on article pages.
