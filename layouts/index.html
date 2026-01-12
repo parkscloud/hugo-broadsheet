@@ -13,7 +13,14 @@
     <a href="{{ $lead.Permalink }}">
       {{- if $lead.Params.image }}
       <figure class="lead-story-image">
+        {{- if strings.HasSuffix $lead.Params.image ".webp" }}
+        <picture>
+          <source srcset="{{ $lead.Params.image }}" type="image/webp">
+          <img src="{{ replace $lead.Params.image ".webp" ".png" }}" alt="{{ $lead.Title }}" loading="eager">
+        </picture>
+        {{- else }}
         <img src="{{ $lead.Params.image }}" alt="{{ $lead.Title }}" loading="eager">
+        {{- end }}
       </figure>
       {{- end }}
       <div class="lead-story-content">
@@ -50,7 +57,14 @@
       <a href="{{ .Permalink }}">
         {{- if .Params.image }}
         <figure class="story-card-image">
+          {{- if strings.HasSuffix .Params.image ".webp" }}
+          <picture>
+            <source srcset="{{ .Params.image }}" type="image/webp">
+            <img src="{{ replace .Params.image ".webp" ".png" }}" alt="{{ .Title }}" loading="lazy">
+          </picture>
+          {{- else }}
           <img src="{{ .Params.image }}" alt="{{ .Title }}" loading="lazy">
+          {{- end }}
         </figure>
         {{- end }}
         <div class="story-card-content">

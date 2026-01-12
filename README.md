@@ -162,7 +162,7 @@ All images in Broadsheet use a **16:9 aspect ratio** with `object-fit: cover`. T
 |------|-------|
 | Aspect ratio | 16:9 |
 | Dimensions | 1200×675 px |
-| Format | WebP (preferred), JPEG |
+| Format | WebP (with PNG fallback) |
 | Max file size | 150 KB |
 
 **Usage in front matter:**
@@ -172,9 +172,16 @@ image: "/images/posts/my-article.webp"
 imageCaption: "Photo credit or description"
 ```
 
+**PNG fallback:** When using WebP images, Broadsheet automatically provides a PNG fallback for browsers that don't support WebP. The theme uses the HTML `<picture>` element to serve WebP to modern browsers while falling back to PNG for older ones.
+
+To use this feature:
+1. Save both formats with the same base name (e.g., `my-article.webp` and `my-article.png`)
+2. Reference only the `.webp` file in front matter
+3. The theme automatically generates a `<source>` for WebP and an `<img>` fallback pointing to the `.png`
+
 **Preparation tips:**
 - Crop to 16:9 before uploading to avoid unexpected cropping
-- Use WebP for best compression; JPEG as fallback
+- Provide both WebP and PNG versions for maximum compatibility
 - Compress images to under 150KB for fast mobile loading
 - Store in `static/images/` and reference with absolute paths
 - Use [Squoosh](https://squoosh.app/) for easy browser-based conversion with visual comparison
@@ -375,6 +382,9 @@ The fonts included in `static/fonts/` are licensed under the [SIL Open Font Lice
 Icons are embedded as inline SVG in templates (no external requests).
 
 ## Changelog
+
+### v0.3.8 - 2026-01-12
+- Added PNG fallback support on homepage for WebP images using `<picture>` element
 
 ### v0.3.7 - 2026-01-09
 - Standardized footer link styling: all links now show color change on hover without underlines
