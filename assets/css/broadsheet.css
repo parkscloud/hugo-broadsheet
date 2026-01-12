@@ -731,7 +731,7 @@ figure {
 }
 
 .list-title {
-  font-size: var(--text-3xl);
+  font-size: var(--text-4xl);
   margin-bottom: var(--space-sm);
 }
 
