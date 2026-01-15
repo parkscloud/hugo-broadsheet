@@ -69,6 +69,12 @@
         <a href="https://www.reddit.com/submit?url={{ .Permalink }}&title={{ .Title }}" target="_blank" rel="noopener noreferrer" class="share-button share-reddit" aria-label="Share on Reddit">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18V11c0-3 2-5 5-5"/><line x1="14" y1="18" x2="20" y2="6"/></svg>
         </a>
+        {{- $emailSubject := replace .Title " " "%20" -}}
+        {{- $emailBody := .Permalink -}}
+        {{- with .Params.summary }}{{ $emailBody = printf "%s%%0A%%0A%s" (replace . " " "%20") $.Permalink }}{{ end -}}
+        <a href="{{ printf "mailto:?subject=%s&body=%s" $emailSubject $emailBody | safeURL }}" class="share-button share-email" aria-label="Share via Email">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
+        </a>
       </div>
     </div>
     {{- end }}
