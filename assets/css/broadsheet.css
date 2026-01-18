@@ -195,6 +195,15 @@ figure {
   color: var(--color-text);
 }
 
+.masthead-bookmark {
+  /* Inherits uppercase, letter-spacing from .masthead-top */
+}
+
+@media (max-width: 767px) {
+  .masthead-bookmark {
+    display: none;
+  }
+}
 
 .masthead-title {
   font-family: var(--font-headline);

@@ -10,6 +10,16 @@
         document.getElementById('masthead-date').textContent = d.toLocaleDateString('en-US', options);
       })();
     </script>
+    <div class="masthead-bookmark" id="masthead-bookmark"></div>
+    <script>
+      (function() {
+        var isMac = navigator.platform.toUpperCase().includes('MAC');
+        var el = document.getElementById('masthead-bookmark');
+        if (el) {
+          el.textContent = isMac ? 'Press ⌘+D to bookmark' : 'Press Ctrl+D to bookmark';
+        }
+      })();
+    </script>
     {{- if .Site.Params.enableSearch }}
     <div class="masthead-controls">
       <button id="search-toggle" aria-label="Search" title="Search">
