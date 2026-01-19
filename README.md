@@ -4,7 +4,7 @@ A newspaper-style [Hugo](https://gohugo.io/) theme designed for news sites, maga
 
 **Live Demo:** [ap7i.com](https://ap7i.com/)
 
-> **Note:** This theme is in active development (v0.x). The API and features may change before v1.0 stable release.
+> **Note:** This theme is in active development (v0.x). The configuration options, templates, and CSS classes may change before v1.0 stable release.
 
 ## Features
 
