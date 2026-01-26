@@ -587,6 +587,30 @@ figure {
   margin: var(--space-lg) 0;
 }
 
+/* Tables */
+.article-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--space-lg) 0 var(--space-xl);
+  font-size: var(--text-base);
+}
+
+.article-content th,
+.article-content td {
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-rule-light);
+  text-align: left;
+}
+
+.article-content th {
+  background: var(--color-bg-alt);
+  font-weight: 600;
+}
+
+.article-content tr:nth-child(even) {
+  background: var(--color-bg-alt);
+}
+
 /* Article Footer */
 .article-footer {
   margin-top: var(--space-2xl);
