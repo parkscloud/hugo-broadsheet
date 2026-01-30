@@ -14,9 +14,18 @@
       {{- if $lead.Params.image }}
       <figure class="lead-story-image">
         {{- if strings.HasSuffix $lead.Params.image ".webp" }}
+        {{- $baseImage := replace $lead.Params.image ".webp" "" }}
+        {{- $jpgPath := printf "static%s.jpg" $baseImage }}
+        {{- $pngPath := printf "static%s.png" $baseImage }}
         <picture>
           <source srcset="{{ $lead.Params.image }}" type="image/webp">
-          <img src="{{ replace $lead.Params.image ".webp" ".png" }}" alt="{{ $lead.Title }}" loading="eager">
+          {{- if fileExists $jpgPath }}
+          <img src="{{ $baseImage }}.jpg" alt="{{ $lead.Title }}" loading="eager">
+          {{- else if fileExists $pngPath }}
+          <img src="{{ $baseImage }}.png" alt="{{ $lead.Title }}" loading="eager">
+          {{- else }}
+          <img src="{{ $lead.Params.image }}" alt="{{ $lead.Title }}" loading="eager">
+          {{- end }}
         </picture>
         {{- else }}
         <img src="{{ $lead.Params.image }}" alt="{{ $lead.Title }}" loading="eager">
@@ -58,9 +67,18 @@
         {{- if .Params.image }}
         <figure class="story-card-image">
           {{- if strings.HasSuffix .Params.image ".webp" }}
+          {{- $baseImage := replace .Params.image ".webp" "" }}
+          {{- $jpgPath := printf "static%s.jpg" $baseImage }}
+          {{- $pngPath := printf "static%s.png" $baseImage }}
           <picture>
             <source srcset="{{ .Params.image }}" type="image/webp">
-            <img src="{{ replace .Params.image ".webp" ".png" }}" alt="{{ .Title }}" loading="lazy">
+            {{- if fileExists $jpgPath }}
+            <img src="{{ $baseImage }}.jpg" alt="{{ .Title }}" loading="lazy">
+            {{- else if fileExists $pngPath }}
+            <img src="{{ $baseImage }}.png" alt="{{ .Title }}" loading="lazy">
+            {{- else }}
+            <img src="{{ .Params.image }}" alt="{{ .Title }}" loading="lazy">
+            {{- end }}
           </picture>
           {{- else }}
           <img src="{{ .Params.image }}" alt="{{ .Title }}" loading="lazy">

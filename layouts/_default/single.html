@@ -27,9 +27,18 @@
   {{- if .Params.image }}
   <figure class="article-image">
     {{- if strings.HasSuffix .Params.image ".webp" }}
+    {{- $baseImage := replace .Params.image ".webp" "" }}
+    {{- $jpgPath := printf "static%s.jpg" $baseImage }}
+    {{- $pngPath := printf "static%s.png" $baseImage }}
     <picture>
       <source srcset="{{ .Params.image }}" type="image/webp">
-      <img src="{{ replace .Params.image ".webp" ".png" }}" alt="{{ .Title }}">
+      {{- if fileExists $jpgPath }}
+      <img src="{{ $baseImage }}.jpg" alt="{{ .Title }}">
+      {{- else if fileExists $pngPath }}
+      <img src="{{ $baseImage }}.png" alt="{{ .Title }}">
+      {{- else }}
+      <img src="{{ .Params.image }}" alt="{{ .Title }}">
+      {{- end }}
     </picture>
     {{- else }}
     <img src="{{ .Params.image }}" alt="{{ .Title }}">
