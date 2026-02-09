@@ -391,6 +391,9 @@ Icons are embedded as inline SVG in templates (no external requests).
 
 ## Changelog
 
+### v0.7.0 - 2026-02-09
+- Widened list page layout from 720px to 1200px to match homepage width
+
 ### v0.3.9 - 2026-01-30
 - Auto-detect JPG or PNG fallback for WebP images at build time (JPG preferred for photos, PNG for graphics)
 

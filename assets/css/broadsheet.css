@@ -752,7 +752,7 @@ figure {
    List Page
    -------------------------------------------------------------------------- */
 .list-page {
-  max-width: var(--content-width);
+  max-width: var(--max-width);
   margin: 0 auto;
 }
 
