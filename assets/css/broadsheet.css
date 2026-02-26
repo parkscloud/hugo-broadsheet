@@ -305,7 +305,6 @@ figure {
 .lead-story-image img {
   width: 100%;
   aspect-ratio: 16 / 9;
-  object-fit: cover;
 }
 
 .lead-story-headline {
@@ -351,7 +350,6 @@ figure {
 .story-card-image img {
   width: 100%;
   aspect-ratio: 16 / 9;
-  object-fit: cover;
 }
 
 .story-card-headline {
@@ -504,7 +502,6 @@ figure {
 .article-image img {
   width: 100%;
   aspect-ratio: 16 / 9;
-  object-fit: cover;
 }
 
 .article-image figcaption {
