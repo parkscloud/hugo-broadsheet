@@ -391,6 +391,9 @@ Icons are embedded as inline SVG in templates (no external requests).
 
 ## Changelog
 
+### v0.7.2 - 2026-03-31
+- Dark mode image support: `<picture>` elements now auto-detect `-dark` variants via `fileExists()` and serve them with `media="(prefers-color-scheme: dark)"`
+
 ### v0.7.0 - 2026-02-09
 - Widened list page layout from 720px to 1200px to match homepage width
 

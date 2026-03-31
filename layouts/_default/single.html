@@ -31,6 +31,17 @@
     {{- $jpgPath := printf "static%s.jpg" $baseImage }}
     {{- $pngPath := printf "static%s.png" $baseImage }}
     <picture>
+      {{- $darkWebP := printf "static%s-dark.webp" $baseImage }}
+      {{- if fileExists $darkWebP }}
+      <source srcset="{{ $baseImage }}-dark.webp" type="image/webp" media="(prefers-color-scheme: dark)">
+      {{- $darkJpg := printf "static%s-dark.jpg" $baseImage }}
+      {{- $darkPng := printf "static%s-dark.png" $baseImage }}
+      {{- if fileExists $darkJpg }}
+      <source srcset="{{ $baseImage }}-dark.jpg" type="image/jpeg" media="(prefers-color-scheme: dark)">
+      {{- else if fileExists $darkPng }}
+      <source srcset="{{ $baseImage }}-dark.png" type="image/png" media="(prefers-color-scheme: dark)">
+      {{- end }}
+      {{- end }}
       <source srcset="{{ .Params.image }}" type="image/webp">
       {{- if fileExists $jpgPath }}
       <img src="{{ $baseImage }}.jpg" alt="{{ .Title }}">
