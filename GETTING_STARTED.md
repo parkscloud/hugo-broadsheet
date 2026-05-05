@@ -56,7 +56,7 @@ Edit `hugo.toml`:
 
 ```toml
 baseURL = 'https://example.com/'
-languageCode = 'en-us'
+locale = 'en-us'
 title = 'My News Site'
 theme = 'broadsheet'
 
