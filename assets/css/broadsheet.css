@@ -994,6 +994,12 @@ figure {
   margin-bottom: 0;
 }
 
+.callout pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow-x: visible;
+}
+
 /* --------------------------------------------------------------------------
    Utility Classes
    -------------------------------------------------------------------------- */

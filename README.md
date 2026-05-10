@@ -391,6 +391,9 @@ Icons are embedded as inline SVG in templates (no external requests).
 
 ## Changelog
 
+### v0.7.5 - 2026-05-10
+- `.callout pre` now wraps text instead of horizontal-scrolling: `white-space: pre-wrap; overflow-wrap: anywhere; overflow-x: visible;` overrides the default `.article-content pre { overflow-x: auto; }` rule when a `<pre>` is nested inside a `<div class="callout">`. Use this pattern for long preformatted content that benefits from monospace structure but needs to wrap to the column width — e.g., an API call with a long string parameter, a long shell command, or a structured config file. Indentation is preserved; long lines wrap.
+
 ### v0.7.2 - 2026-03-31
 - Dark mode image support: `<picture>` elements now auto-detect `-dark` variants via `fileExists()` and serve them with `media="(prefers-color-scheme: dark)"`
 
