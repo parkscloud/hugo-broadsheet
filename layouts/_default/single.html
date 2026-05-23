@@ -74,26 +74,32 @@
     {{- end }}
 
     {{- if .Site.Params.enableShareButtons }}
-    <div class="article-share">
-      <span class="article-share-label">Share</span>
+    <div class="article-share" role="group" aria-label="Share">
       <div class="article-share-buttons">
+        {{- /* Encode the title once for the buttons that embed it in a query string (X, Reddit, Email, SMS) so &, #, %, etc. can't break the link. LinkedIn/Facebook pass only the URL. */ -}}
+        {{- $shareTitle := partial "urlencode.html" .Title -}}
         <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ .Permalink }}" target="_blank" rel="noopener noreferrer" class="share-button share-linkedin" aria-label="Share on LinkedIn">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
         </a>
         <a href="https://www.facebook.com/sharer/sharer.php?u={{ .Permalink }}" target="_blank" rel="noopener noreferrer" class="share-button share-facebook" aria-label="Share on Facebook">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
         </a>
-        <a href="https://twitter.com/intent/tweet?url={{ .Permalink }}&text={{ .Title }}" target="_blank" rel="noopener noreferrer" class="share-button share-x" aria-label="Share on X">
+        <a href="{{ printf "https://twitter.com/intent/tweet?url=%s&text=%s" .Permalink $shareTitle | safeURL }}" target="_blank" rel="noopener noreferrer" class="share-button share-x" aria-label="Share on X">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </a>
-        <a href="https://www.reddit.com/submit?url={{ .Permalink }}&title={{ .Title }}" target="_blank" rel="noopener noreferrer" class="share-button share-reddit" aria-label="Share on Reddit">
+        <a href="{{ printf "https://www.reddit.com/submit?url=%s&title=%s" .Permalink $shareTitle | safeURL }}" target="_blank" rel="noopener noreferrer" class="share-button share-reddit" aria-label="Share on Reddit">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18V11c0-3 2-5 5-5"/><line x1="14" y1="18" x2="20" y2="6"/></svg>
         </a>
-        {{- $emailSubject := replace .Title " " "%20" -}}
+        {{- $emailSubject := $shareTitle -}}
         {{- $emailBody := .Permalink -}}
-        {{- with .Params.summary }}{{ $emailBody = printf "%s%%0A%%0A%s" (replace . " " "%20") $.Permalink }}{{ end -}}
+        {{- with .Params.summary }}{{ $emailBody = printf "%s%%0A%%0A%s" (partial "urlencode.html" .) $.Permalink }}{{ end -}}
         <a href="{{ printf "mailto:?subject=%s&body=%s" $emailSubject $emailBody | safeURL }}" class="share-button share-email" aria-label="Share via Email">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
+        </a>
+        {{- /* SMS/text share — mobile only (see .share-sms in CSS); sends the headline + URL via the device's default messaging app */ -}}
+        {{- $smsBody := printf "%s%%0A%s" $shareTitle .Permalink -}}
+        <a href="{{ printf "sms:?&body=%s" $smsBody | safeURL }}" class="share-button share-sms" aria-label="Share via text message">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         </a>
       </div>
     </div>

@@ -608,6 +608,20 @@ figure {
   background: var(--color-bg-alt);
 }
 
+/* Wide tables scroll within their own box instead of overflowing the page on
+   narrow screens. The table render hook (layouts/_default/_markup/render-table.html)
+   wraps every Markdown table in .table-scroll; the vertical margin moves here so
+   spacing is unchanged. */
+.article-content .table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: var(--space-lg) 0 var(--space-xl);
+}
+
+.article-content .table-scroll table {
+  margin: 0;
+}
+
 /* Article Footer */
 .article-footer {
   margin-top: var(--space-2xl);
@@ -643,15 +657,9 @@ figure {
   margin-top: var(--space-lg);
 }
 
-.article-share-label {
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--color-text-faint);
-}
-
 .article-share-buttons {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--space-sm);
 }
 
@@ -674,6 +682,13 @@ figure {
 
 .share-button svg {
   display: block;
+}
+
+/* SMS/text share button — mobile only; the sms: scheme is meaningless on desktop */
+@media (min-width: 768px) {
+  .share-sms {
+    display: none;
+  }
 }
 
 /* Article Navigation */

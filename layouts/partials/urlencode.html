@@ -1,0 +1,14 @@
+{{- /*
+  urlencode.html — percent-encode a single string for safe use as a URL query
+  value across http(s), mailto:, and sms: targets.
+
+  Usage: {{ $encoded := partial "urlencode.html" "some text & stuff #1" }}
+
+  querify does proper RFC-3986 query escaping (&, #, %, ", <, >, etc.) but, like
+  application/x-www-form-urlencoded, emits "+" for spaces. We strip the synthetic
+  "x=" key and convert that "+" back to %20, because some mail/SMS clients render
+  a literal "+" instead of a space. Literal plus signs in the input are already
+  emitted as %2B by querify, so this swap only affects spaces.
+*/ -}}
+{{- $encoded := replace (strings.TrimPrefix "x=" (querify "x" .)) "+" "%20" -}}
+{{- return $encoded -}}
