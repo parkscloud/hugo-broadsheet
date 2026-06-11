@@ -5,6 +5,22 @@ follows [Semantic Versioning](https://semver.org/) (see the README): `0.x.0`
 introduces new features, `0.x.y` is bug fixes and minor improvements. Release
 history before `0.8.0` is recorded in the git tag list.
 
+## [0.8.1] - 2026-06-11
+
+### Fixed
+- Long unbroken strings (URLs especially) in article body copy overflowed the
+  right edge of the page on narrow screens instead of wrapping — most visibly
+  inside `.callout` boxes, where a bare autolinked URL extended past both the
+  callout background and the viewport. `.article-content` now sets
+  `overflow-wrap: break-word`, which inherits to everything in the article body
+  (paragraphs, links, callouts, blockquotes, lists), so an overflowing word
+  breaks mid-string only when it cannot fit on a line of its own. `break-word`
+  was chosen over `anywhere` deliberately: it does not affect min-content
+  intrinsic sizing, so table column widths inside the 0.8.0 `.table-scroll`
+  containers are unchanged. Desktop rendering is unaffected (the strings fit on
+  one line). The existing `.callout pre` rule (`overflow-wrap: anywhere`, for
+  preformatted blocks) is unchanged.
+
 ## [0.8.0] - 2026-05-23
 
 ### Added
