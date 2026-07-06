@@ -1,0 +1,97 @@
+{{- $res := "" -}}
+{{- if .src -}}
+  {{- $res = .context.Resources.GetMatch .src -}}
+  {{- if not $res -}}
+    {{- $res = .context.Resources.GetMatch (path.Base .src) -}}
+  {{- end -}}
+  {{- if and (not $res) (resources.Get (strings.TrimPrefix "/" .src)) -}}
+    {{- $res = resources.Get (strings.TrimPrefix "/" .src) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if and $res (ne $res.MediaType.SubType "svg") -}}
+  {{- /* Auto-optimize local page bundle or global asset image */ -}}
+  {{- $w := $res.Width -}}
+  {{- $targetWidth := .width | default 1200 -}}
+  {{- if gt $w $targetWidth -}}
+    {{- $w = $targetWidth -}}
+  {{- end -}}
+
+  {{- /* Formats configuration (defaults to webp only for speed) */ -}}
+  {{- $formats := .context.Site.Params.imageFormats | default (slice "webp") -}}
+
+  {{- /* Detect and process dark mode variant if it exists in the same directory */ -}}
+  {{- $darkRes := "" -}}
+  {{- if eq $res.ResourceType "image" -}}
+    {{- $ext := path.Ext $res.Name -}}
+    {{- $baseName := strings.TrimSuffix $ext $res.Name -}}
+    {{- if .context.Resources.GetMatch (printf "%s-dark%s" $baseName $ext) -}}
+      {{- $darkRes = .context.Resources.GetMatch (printf "%s-dark%s" $baseName $ext) -}}
+    {{- else if resources.Get (printf "%s-dark%s" $baseName $ext) -}}
+      {{- $darkRes = resources.Get (printf "%s-dark%s" $baseName $ext) -}}
+    {{- end -}}
+  {{- end -}}
+
+  <picture>
+    {{- range $formats -}}
+      {{- $fmt := . -}}
+      {{- if eq $fmt "webp" -}}
+        {{- $opt := $res.Resize (printf "%dx webp q82" $w) -}}
+        {{- if $darkRes -}}
+          {{- $darkOpt := $darkRes.Resize (printf "%dx webp q82" $w) -}}
+          <source srcset="{{ $darkOpt.RelPermalink }}" type="image/webp" media="(prefers-color-scheme: dark)">
+        {{- end -}}
+        <source srcset="{{ $opt.RelPermalink }}" type="image/webp">
+      {{- else if eq $fmt "avif" -}}
+        {{- $opt := $res.Resize (printf "%dx avif q82" $w) -}}
+        {{- if $darkRes -}}
+          {{- $darkOpt := $darkRes.Resize (printf "%dx avif q82" $w) -}}
+          <source srcset="{{ $darkOpt.RelPermalink }}" type="image/avif" media="(prefers-color-scheme: dark)">
+        {{- end -}}
+        <source srcset="{{ $opt.RelPermalink }}" type="image/avif">
+      {{- end -}}
+    {{- end -}}
+    
+    {{- /* Resized fallback */ -}}
+    {{- $fallback := $res.Resize (printf "%dx q82" $w) -}}
+    <img src="{{ $fallback.RelPermalink }}"
+         width="{{ $fallback.Width }}"
+         height="{{ $fallback.Height }}"
+         alt="{{ .alt }}"
+         loading="{{ .loading | default "lazy" }}"
+         decoding="async">
+  </picture>
+{{- else if and $res (eq $res.MediaType.SubType "svg") -}}
+  {{- /* Render SVG resource directly without modifications */ -}}
+  <img src="{{ $res.RelPermalink }}" alt="{{ .alt }}" loading="{{ .loading | default "lazy" }}" decoding="async">
+{{- else if .src -}}
+  {{- /* Original static/external logic */ -}}
+  {{- if strings.HasSuffix .src ".webp" -}}
+    {{- $baseImage := replace .src ".webp" "" -}}
+    {{- $jpgPath := printf "static%s.jpg" $baseImage -}}
+    {{- $pngPath := printf "static%s.png" $baseImage -}}
+    <picture>
+      {{- $darkWebP := printf "static%s-dark.webp" $baseImage -}}
+      {{- if fileExists $darkWebP -}}
+        <source srcset="{{ $baseImage }}-dark.webp" type="image/webp" media="(prefers-color-scheme: dark)">
+        {{- $darkJpg := printf "static%s-dark.jpg" $baseImage -}}
+        {{- $darkPng := printf "static%s-dark.png" $baseImage -}}
+        {{- if fileExists $darkJpg -}}
+          <source srcset="{{ $baseImage }}-dark.jpg" type="image/jpeg" media="(prefers-color-scheme: dark)">
+        {{- else if fileExists $darkPng -}}
+          <source srcset="{{ $baseImage }}-dark.png" type="image/png" media="(prefers-color-scheme: dark)">
+        {{- end -}}
+      {{- end -}}
+      <source srcset="{{ .src }}" type="image/webp">
+      {{- if fileExists $jpgPath -}}
+        <img src="{{ $baseImage }}.jpg" alt="{{ .alt }}" loading="{{ .loading | default "lazy" }}" decoding="async">
+      {{- else if fileExists $pngPath -}}
+        <img src="{{ $baseImage }}.png" alt="{{ .alt }}" loading="{{ .loading | default "lazy" }}" decoding="async">
+      {{- else -}}
+        <img src="{{ .src }}" alt="{{ .alt }}" loading="{{ .loading | default "lazy" }}" decoding="async">
+      {{- end -}}
+    </picture>
+  {{- else -}}
+    <img src="{{ .src | safeURL }}" alt="{{ .alt }}" loading="{{ .loading | default "lazy" }}" decoding="async">
+  {{- end -}}
+{{- end -}}
