@@ -547,7 +547,7 @@ figure {
   font-weight: 700;
   font-size: var(--text-4xl);
   line-height: 1;
-  padding-right: 0.12em;
+  padding-right: 0.05em;
 }
 
 .article-content a {
