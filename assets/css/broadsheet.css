@@ -533,14 +533,16 @@ figure {
 }
 
 /* Drop cap on the first paragraph after an AI disclosure note
-   (the note renders as a first-of-type <p> containing only an <em>) */
+   (the note renders as a first-of-type <p> containing only an <em>);
+   negative bottom margin keeps the float from claiming the third line */
 .article-content > p:has(> em:only-child):first-of-type + p::first-letter {
   font-family: var(--font-headline);
   font-weight: 700;
   font-size: 3.4em;
-  line-height: 0.85;
+  line-height: 0.97;
   float: left;
   padding: 0.06em 0.12em 0 0;
+  margin-bottom: -0.12em;
 }
 
 .article-content a {
