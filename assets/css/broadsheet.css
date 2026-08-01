@@ -532,6 +532,17 @@ figure {
   margin-bottom: var(--space-lg);
 }
 
+/* Drop cap on the first paragraph after an AI disclosure note
+   (the note renders as a first-of-type <p> containing only an <em>) */
+.article-content > p:has(> em:only-child):first-of-type + p::first-letter {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-size: 3.4em;
+  line-height: 0.85;
+  float: left;
+  padding: 0.06em 0.12em 0 0;
+}
+
 .article-content a {
   color: var(--color-accent);
   text-decoration: underline;
