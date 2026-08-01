@@ -532,13 +532,15 @@ figure {
   margin-bottom: var(--space-lg);
 }
 
-/* Raised cap on the first paragraph after an AI disclosure note
-   (the note renders as a first-of-type <p> containing only an <em>);
-   inline, so the cap shares the first body line's baseline */
+/* Raised cap on the first non-italic paragraph of a post: the paragraph
+   after an AI disclosure note when one is present (the note renders as a
+   first-of-type <p> containing only an <em>), otherwise the first paragraph.
+   Inline, so the cap shares the first body line's baseline */
 .article-content > p:has(> em:only-child):first-of-type + p {
   margin-top: var(--space-lg);
 }
 
+.article-content > p:first-of-type:not(:has(> em:only-child))::first-letter,
 .article-content > p:has(> em:only-child):first-of-type + p::first-letter {
   font-family: var(--font-headline);
   font-weight: 700;
