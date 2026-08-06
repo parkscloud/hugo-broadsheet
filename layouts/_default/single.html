@@ -26,34 +26,7 @@
 
   {{- if .Params.image }}
   <figure class="article-image">
-    {{- if strings.HasSuffix .Params.image ".webp" }}
-    {{- $baseImage := replace .Params.image ".webp" "" }}
-    {{- $jpgPath := printf "static%s.jpg" $baseImage }}
-    {{- $pngPath := printf "static%s.png" $baseImage }}
-    <picture>
-      {{- $darkWebP := printf "static%s-dark.webp" $baseImage }}
-      {{- if fileExists $darkWebP }}
-      <source srcset="{{ $baseImage }}-dark.webp" type="image/webp" media="(prefers-color-scheme: dark)">
-      {{- $darkJpg := printf "static%s-dark.jpg" $baseImage }}
-      {{- $darkPng := printf "static%s-dark.png" $baseImage }}
-      {{- if fileExists $darkJpg }}
-      <source srcset="{{ $baseImage }}-dark.jpg" type="image/jpeg" media="(prefers-color-scheme: dark)">
-      {{- else if fileExists $darkPng }}
-      <source srcset="{{ $baseImage }}-dark.png" type="image/png" media="(prefers-color-scheme: dark)">
-      {{- end }}
-      {{- end }}
-      <source srcset="{{ .Params.image }}" type="image/webp">
-      {{- if fileExists $jpgPath }}
-      <img src="{{ $baseImage }}.jpg" alt="{{ .Title }}">
-      {{- else if fileExists $pngPath }}
-      <img src="{{ $baseImage }}.png" alt="{{ .Title }}">
-      {{- else }}
-      <img src="{{ .Params.image }}" alt="{{ .Title }}">
-      {{- end }}
-    </picture>
-    {{- else }}
-    <img src="{{ .Params.image }}" alt="{{ .Title }}">
-    {{- end }}
+    {{ partial "image.html" (dict "context" . "src" .Params.image "alt" .Title "loading" "eager" "width" 1600) }}
     {{- if .Params.imageCaption }}
     <figcaption>{{ .Params.imageCaption }}</figcaption>
     {{- end }}

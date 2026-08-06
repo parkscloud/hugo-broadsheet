@@ -47,11 +47,26 @@
     <div class="masthead-nav-rule"></div>
     <ul class="masthead-nav-list">
       {{- range .Site.Menus.main }}
+      {{- $url := .URL }}
+      {{- $show := true }}
+      {{- if hasPrefix $url "/" }}
+        {{- $sectionName := strings.Trim $url "/" }}
+        {{- $sectionPages := where $.Site.RegularPages "Section" $sectionName }}
+        {{- $paramSectionPages := where $.Site.RegularPages "Params.section" (lower $sectionName) }}
+        {{- $paramSectionPagesCap := where $.Site.RegularPages "Params.section" (title $sectionName) }}
+        {{- if and (ne $sectionName "about") (ne $sectionName "contact") (ne $sectionName "") }}
+          {{- if and (eq (len $sectionPages) 0) (eq (len $paramSectionPages) 0) (eq (len $paramSectionPagesCap) 0) }}
+            {{- $show = false }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+      {{- if $show }}
       <li>
         <a href="{{ .URL }}" {{ if eq $.RelPermalink .URL }}class="active"{{ end }}>
           {{ .Name }}
         </a>
       </li>
+      {{- end }}
       {{- end }}
     </ul>
     <div class="masthead-nav-rule"></div>
