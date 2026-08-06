@@ -532,6 +532,24 @@ figure {
   margin-bottom: var(--space-lg);
 }
 
+/* Raised cap on the first non-italic paragraph of a post: the paragraph
+   after an AI disclosure note when one is present (the note renders as a
+   first-of-type <p> containing only an <em>), otherwise the first paragraph.
+   Inline, so the cap shares the first body line's baseline.
+   Scoped to posts (.article-post) — pages like /about/ are excluded */
+.article-post .article-content > p:has(> em:only-child):first-of-type + p {
+  margin-top: var(--space-lg);
+}
+
+.article-post .article-content > p:first-of-type:not(:has(> em:only-child))::first-letter,
+.article-post .article-content > p:has(> em:only-child):first-of-type + p::first-letter {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-size: var(--text-4xl);
+  line-height: 1;
+  padding-right: 0.05em;
+}
+
 .article-content a {
   color: var(--color-accent);
   text-decoration: underline;

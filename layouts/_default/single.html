@@ -1,5 +1,5 @@
 {{ define "main" }}
-<article class="article">
+<article class="article{{ if eq .Section "posts" }} article-post{{ end }}">
   <header class="article-header">
     {{- if .Params.section }}
     <span class="article-section">{{ .Params.section }}</span>
