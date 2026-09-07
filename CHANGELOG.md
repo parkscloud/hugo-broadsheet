@@ -5,6 +5,16 @@ follows [Semantic Versioning](https://semver.org/) (see the README): `0.x.0`
 introduces new features, `0.x.y` is bug fixes and minor improvements. Release
 history before `0.8.0` is recorded in the git tag list.
 
+## [0.8.9] - 2026-09-07
+
+### Fixed
+
+- Article titles and headlines in lead stories, cards, and lists now wrap long
+  unbroken names within their columns. `overflow-wrap: anywhere` prevents
+  horizontal page overflow on narrow screens and allows grid items to shrink
+  below a word's intrinsic width. The UnitedHealthcare article on ap7i.com
+  exposed the issue at a 390-pixel viewport.
+
 ## [0.8.1] - 2026-06-11
 
 ### Fixed
