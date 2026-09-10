@@ -33,19 +33,28 @@
 {{- end }}
 {{- /* Use article image if available, otherwise site default */ -}}
 {{- $baseURL := .Site.BaseURL | strings.TrimSuffix "/" -}}
+{{- $ogImage := "/og-image.png" -}}
 {{- if .Params.image -}}
-<meta property="og:image" content="{{ $baseURL }}{{ .Params.image }}">
-{{- else -}}
-<meta property="og:image" content="{{ $baseURL }}/og-image.png">
-{{- end }}
+  {{- $res := .Resources.GetMatch .Params.image -}}
+  {{- if not $res -}}
+    {{- $res = .Resources.GetMatch (path.Base .Params.image) -}}
+  {{- end -}}
+  {{- if and (not $res) (resources.Get (strings.TrimPrefix "/" .Params.image)) -}}
+    {{- $res = resources.Get (strings.TrimPrefix "/" .Params.image) -}}
+  {{- end -}}
+  {{- if $res -}}
+    {{- /* Local/global resource: resize to 1200px JPG for compatibility */ -}}
+    {{- $ogRes := $res.Resize "1200x q80" -}}
+    {{- $ogImage = $ogRes.RelPermalink -}}
+  {{- else -}}
+    {{- $ogImage = .Params.image -}}
+  {{- end -}}
+{{- end -}}
+<meta property="og:image" content="{{ if (urls.Parse $ogImage).Host }}{{ $ogImage }}{{ else }}{{ $baseURL }}{{ $ogImage }}{{ end }}">
 
 {{- /* Twitter Cards */ -}}
 <meta name="twitter:card" content="summary_large_image">
-{{- if .Params.image -}}
-<meta name="twitter:image" content="{{ $baseURL }}{{ .Params.image }}">
-{{- else -}}
-<meta name="twitter:image" content="{{ $baseURL }}/og-image.png">
-{{- end }}
+<meta name="twitter:image" content="{{ if (urls.Parse $ogImage).Host }}{{ $ogImage }}{{ else }}{{ $baseURL }}{{ $ogImage }}{{ end }}">
 <meta name="twitter:title" content="{{ .Title }}">
 <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}{{ end }}">
 
