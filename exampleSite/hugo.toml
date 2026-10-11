@@ -18,6 +18,10 @@ buildExpired = false
   # and AI answers. The default robots.txt already allows every crawler.
   robotsAllowAI = false
 
+  # Structured data (JSON-LD) is off by default. To turn it on:
+  # [params.schema]
+  #   enable = true
+
   [[params.footerLinks]]
     name = "About"
     url = "/about/"

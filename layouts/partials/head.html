@@ -49,6 +49,9 @@
 <meta name="twitter:title" content="{{ .Title }}">
 <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}{{ end }}">
 
+{{- /* Structured data (JSON-LD); emits nothing unless params.schema.enable */ -}}
+{{ partial "schema.html" . }}
+
 {{- /* Favicons */ -}}
 <link rel="icon" type="image/x-icon" href="{{ "favicon.ico" | relURL }}">
 <link rel="icon" type="image/png" sizes="16x16" href="{{ "favicon-16x16.png" | relURL }}">

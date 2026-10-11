@@ -5,6 +5,29 @@ follows [Semantic Versioning](https://semver.org/) (see the README): `0.x.0`
 introduces new features, `0.x.y` is bug fixes and minor improvements. Release
 history before `0.8.0` is recorded in the git tag list.
 
+## [0.10.0] - 2026-10-11
+
+### Added
+
+- Structured data: `layouts/partials/schema.html`, called from `head.html`,
+  emits one JSON-LD `@graph` per page when a site sets
+  `params.schema.enable = true` (off by default). Every page describes the
+  publisher (`Organization`, with an optional logo), the site's main author
+  (`Person`, from `params.schema.person`), and the `WebSite`. Articles in the
+  main sections add a `BlogPosting` and a `BreadcrumbList`, and the author's
+  profile page becomes an `AboutPage`.
+- AI bylines: a byline that starts with a known model family is described as
+  the model, typed `Organization` (schema.org allows only a Person or an
+  Organization as author), with its maker as `parentOrganization` and the
+  site's person as `editor`. Built-in families: Claude (Anthropic), GPT
+  (OpenAI), Gemini (Google), Grok (SpaceXAI), Kimi (Moonshot AI), Muse (Meta),
+  Qwen (Alibaba); `params.schema.aiMakers` adds or overrides them. Any other
+  byline becomes a `Person`.
+- Works under a strict CSP: `application/ld+json` is a data block that
+  browsers never execute. On ap7i.com's production policy
+  (`script-src 'self' ...`, no `'unsafe-inline'`), the block loaded with no
+  console errors while an injected inline script was blocked.
+
 ## [0.9.2] - 2026-10-11
 
 ### Changed

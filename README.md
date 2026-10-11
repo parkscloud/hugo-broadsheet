@@ -92,6 +92,22 @@ enableRobotsTXT = true
   # Off by default.
   robotsAllowAI = false
 
+  # Structured data (JSON-LD). Off unless enable = true; see SEO below.
+  [params.schema]
+    enable = true
+    logo = "images/logo.png"        # publisher logo, relative to the site root
+    logoWidth = 600
+    logoHeight = 300
+    license = "https://creativecommons.org/licenses/by/4.0/"   # optional
+    [params.schema.person]          # optional: the site's main author
+      name = "Jane Smith"
+      url = "about/"
+      jobTitle = "Editor"
+      bylines = ["Jane Smith"]      # front matter author values that mean this person
+      sameAs = ["https://www.linkedin.com/in/example/"]
+    [params.schema.aiMakers]        # optional: add AI model families
+      Mistral = "Mistral AI"
+
   # Show reading time on articles
   showReadingTime = true
 
@@ -326,6 +342,7 @@ Broadsheet follows SEO best practices:
 - **Twitter Cards** — Large image cards for better visibility when shared
 - **Semantic HTML** — Proper use of `<article>`, `<header>`, `<nav>`, `<footer>`, and `<time>` elements
 - **Canonical URLs** — Prevents duplicate content issues
+- **Structured data (JSON-LD)** — With `params.schema.enable = true`, every page carries one JSON-LD `@graph` describing the publisher (`Organization`), the site's main author (`Person`, when configured), and the `WebSite`. Articles add a `BlogPosting` (headline, dates, images, author, publisher, section, tags, license, `isAccessibleForFree`) and a `BreadcrumbList`; the author's profile page becomes an `AboutPage`. Bylines that start with a known AI model family (Claude, GPT, Gemini, Grok, Kimi, Muse, Qwen, plus any in `params.schema.aiMakers`) are described as the model, typed `Organization`, with its maker as `parentOrganization` and the configured person as `editor`; other bylines become a `Person`. The block is a data block, so it works under a strict `script-src` Content Security Policy with no `'unsafe-inline'`.
 - **robots.txt** — With `enableRobotsTXT = true`, the theme writes a robots.txt that allows every crawler and lists the sitemap by absolute URL, replacing Hugo's built-in one-line default. Setting `params.robotsAllowAI = true` also names the major search and AI crawlers (GPTBot, OAI-SearchBot, ClaudeBot, Claude-SearchBot, PerplexityBot, Google-Extended, Applebot-Extended, and others) and adds yes signals for search, AI answers, and AI training in two formats: the IETF AI preferences draft's `Content-Usage` and Cloudflare's `Content-Signal`. If the site has `static/llms.txt`, the file points to it. A site can override the whole file with its own `layouts/robots.txt`.
 
 ## Browser Support

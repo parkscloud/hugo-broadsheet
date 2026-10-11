@@ -1,0 +1,131 @@
+{{- /*
+  Broadsheet structured data: one JSON-LD @graph per page.
+
+  Off unless the site sets params.schema.enable = true. Every page describes
+  the publishing Organization, the site's Person (when params.schema.person is
+  set), and the WebSite. Articles in the site's main sections add a
+  BlogPosting and a BreadcrumbList; the person's own profile page becomes an
+  AboutPage.
+
+  Article authors: a byline listed in params.schema.person.bylines points to
+  the Person. A byline that starts with a known AI model family ("GPT"
+  matches "GPT-6 Astra", case-insensitively) is described as an Organization
+  with its maker as parentOrganization, and the Person (when configured) as
+  editor. Families come from the defaults below; a site adds or overrides
+  them with params.schema.aiMakers, e.g. Mistral = "Mistral AI". Any other
+  byline is a human author and becomes a Person with that name.
+
+  The output is a data block (type="application/ld+json"). Browsers never
+  execute it, so a strict script-src CSP does not need to allow it.
+*/ -}}
+{{- $s := dict }}
+{{- with site.Params.schema }}{{ $s = . }}{{ end }}
+{{- if $s.enable }}
+{{- $p := $s.person }}
+{{- $home := site.Home.Permalink }}
+{{- $orgID := printf "%s#organization" $home }}
+{{- $personID := printf "%s#person" $home }}
+{{- $siteID := printf "%s#website" $home }}
+{{- $parts := split (site.Language.Locale | default "en-us") "-" }}
+{{- $lang := index $parts 0 }}
+{{- if gt (len $parts) 1 }}{{ $lang = printf "%s-%s" (index $parts 0) (upper (index $parts 1)) }}{{ end }}
+{{- $graph := slice }}
+
+{{- /* Organization: the publisher */ -}}
+{{- $org := dict "@type" "Organization" "@id" $orgID "name" site.Title "url" $home }}
+{{- with $s.logo }}
+  {{- $logo := dict "@type" "ImageObject" "url" (. | absURL) }}
+  {{- with $s.logoWidth }}{{ $logo = merge $logo (dict "width" .) }}{{ end }}
+  {{- with $s.logoHeight }}{{ $logo = merge $logo (dict "height" .) }}{{ end }}
+  {{- $org = merge $org (dict "logo" $logo) }}
+{{- end }}
+{{- with $p }}{{ $org = merge $org (dict "founder" (dict "@id" $personID)) }}{{ end }}
+{{- $graph = $graph | append $org }}
+
+{{- /* Person: the site's author */ -}}
+{{- with $p }}
+  {{- $person := dict "@type" "Person" "@id" $personID "name" .name }}
+  {{- with .alternateName }}{{ $person = merge $person (dict "alternateName" .) }}{{ end }}
+  {{- with .url }}{{ $person = merge $person (dict "url" (. | absURL)) }}{{ end }}
+  {{- with .jobTitle }}{{ $person = merge $person (dict "jobTitle" .) }}{{ end }}
+  {{- with .knowsAbout }}{{ $person = merge $person (dict "knowsAbout" .) }}{{ end }}
+  {{- with .sameAs }}{{ $person = merge $person (dict "sameAs" .) }}{{ end }}
+  {{- $graph = $graph | append $person }}
+{{- end }}
+
+{{- /* WebSite */ -}}
+{{- $website := dict "@type" "WebSite" "@id" $siteID "name" site.Title "url" $home "publisher" (dict "@id" $orgID) "inLanguage" $lang }}
+{{- with site.Params.tagline }}{{ $website = merge $website (dict "alternateName" .) }}{{ end }}
+{{- with site.Params.description }}{{ $website = merge $website (dict "description" .) }}{{ end }}
+{{- $graph = $graph | append $website }}
+
+{{- /* AboutPage: the person's own profile page */ -}}
+{{- with $p }}{{ with .url }}
+  {{- if eq (. | absURL) $.Permalink }}
+    {{- $graph = $graph | append (dict "@type" "AboutPage" "@id" $.Permalink "url" $.Permalink "name" $.Title "isPartOf" (dict "@id" $siteID) "mainEntity" (dict "@id" $personID) "inLanguage" $lang) }}
+  {{- end }}
+{{- end }}{{ end }}
+
+{{- /* BlogPosting and BreadcrumbList for articles */ -}}
+{{- if and .IsPage (in site.MainSections .Section) }}
+  {{- $desc := "" }}
+  {{- with .Description }}{{ $desc = . }}{{ else }}{{ $desc = .Summary | plainify | htmlUnescape | strings.TrimSpace }}{{ end }}
+
+  {{- $images := slice }}
+  {{- with .Params.image }}
+    {{- $images = $images | append (. | absURL) }}
+    {{- $fallback := replaceRE `\.webp$` ".jpg" . }}
+    {{- if and (ne $fallback .) (fileExists (path.Join "static" $fallback)) }}{{ $images = $images | append ($fallback | absURL) }}{{ end }}
+  {{- else }}
+    {{- with site.Params.images }}{{ $images = $images | append ((index . 0) | absURL) }}{{ end }}
+  {{- end }}
+
+  {{- $byline := .Params.author | default "" }}
+  {{- $bylines := slice }}
+  {{- with $p }}{{ with .bylines }}{{ $bylines = . }}{{ end }}{{ end }}
+  {{- $isPerson := false }}
+  {{- if and $p (in $bylines $byline) }}{{ $isPerson = true }}{{ end }}
+  {{- $makers := dict "claude" "Anthropic" "gpt" "OpenAI" "kimi" "Moonshot AI" "grok" "SpaceXAI" "gemini" "Google" "muse" "Meta" "qwen" "Alibaba" }}
+  {{- with $s.aiMakers }}{{ $makers = merge $makers . }}{{ end }}
+  {{- $maker := "" }}
+  {{- if and $byline (not $isPerson) }}
+    {{- range $prefix, $name := $makers }}
+      {{- if and (not $maker) (hasPrefix (lower $byline) (lower $prefix)) }}{{ $maker = $name }}{{ end }}
+    {{- end }}
+  {{- end }}
+  {{- $author := dict "@id" $personID }}
+  {{- if $maker }}
+    {{- $author = dict "@type" "Organization" "name" $byline "parentOrganization" (dict "@type" "Organization" "name" $maker) }}
+  {{- else if not $isPerson }}
+    {{- $author = dict "@type" "Person" "name" $byline }}
+  {{- end }}
+
+  {{- $article := dict
+      "@type" "BlogPosting"
+      "@id" (printf "%s#article" .Permalink)
+      "headline" .Title
+      "url" .Permalink
+      "mainEntityOfPage" .Permalink
+      "isPartOf" (dict "@id" $siteID)
+      "datePublished" (.PublishDate.Format "2006-01-02T15:04:05-07:00")
+      "dateModified" (.Lastmod.Format "2006-01-02T15:04:05-07:00")
+      "publisher" (dict "@id" $orgID)
+      "inLanguage" $lang
+      "isAccessibleForFree" true
+  }}
+  {{- if $byline }}{{ $article = merge $article (dict "author" $author) }}{{ end }}
+  {{- if and $p $maker }}{{ $article = merge $article (dict "editor" (dict "@id" $personID)) }}{{ end }}
+  {{- with $desc }}{{ $article = merge $article (dict "description" .) }}{{ end }}
+  {{- with $images }}{{ $article = merge $article (dict "image" .) }}{{ end }}
+  {{- with .Params.section }}{{ $article = merge $article (dict "articleSection" .) }}{{ end }}
+  {{- with .Params.tags }}{{ $article = merge $article (dict "keywords" (delimit . ", ")) }}{{ end }}
+  {{- with $s.license }}{{ $article = merge $article (dict "license" .) }}{{ end }}
+  {{- $graph = $graph | append $article }}
+
+  {{- $crumbs := slice (dict "@type" "ListItem" "position" 1 "name" "Home" "item" $home) }}
+  {{- with .CurrentSection }}{{ if not .IsHome }}{{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 2 "name" .Title "item" .Permalink) }}{{ end }}{{ end }}
+  {{- $crumbs = $crumbs | append (dict "@type" "ListItem" "position" (add (len $crumbs) 1) "name" .Title "item" .Permalink) }}
+  {{- $graph = $graph | append (dict "@type" "BreadcrumbList" "@id" (printf "%s#breadcrumb" .Permalink) "itemListElement" $crumbs) }}
+{{- end }}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify | safeJS }}</script>
+{{- end }}
