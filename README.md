@@ -258,6 +258,8 @@ CC BY 4.0
 
 The icons automatically scale with text size and inherit the link color.
 
+Links in `params.footerLinks` whose URL starts with `http://` or `https://` open in a new tab with `rel="noopener noreferrer"`; relative links such as `/about/` open in place.
+
 ### Colors
 
 Override CSS custom properties in your own stylesheet:

@@ -10,7 +10,7 @@
     {{- if .Site.Params.footerLinks }}
     <nav class="footer-nav">
       {{- range .Site.Params.footerLinks }}
-      <a href="{{ .url }}">{{ .name }}</a>
+      <a href="{{ .url }}"{{ if or (hasPrefix .url "http://") (hasPrefix .url "https://") }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ .name }}</a>
       {{- end }}
     </nav>
     {{- end }}

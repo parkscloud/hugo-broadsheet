@@ -5,6 +5,16 @@ follows [Semantic Versioning](https://semver.org/) (see the README): `0.x.0`
 introduces new features, `0.x.y` is bug fixes and minor improvements. Release
 history before `0.8.0` is recorded in the git tag list.
 
+## [0.9.2] - 2026-10-11
+
+### Changed
+
+- Footer links from `params.footerLinks` that point to another site
+  (`http://` or `https://`) now open in a new tab with
+  `rel="noopener noreferrer"`, matching the footer's other outside links.
+  Relative links such as `/about/` still open in place. ap7i.com needed this
+  for a footer link to Google's preferred-sources tool.
+
 ## [0.9.1] - 2026-10-11
 
 ### Changed
