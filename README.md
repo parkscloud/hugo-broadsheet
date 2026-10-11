@@ -92,6 +92,11 @@ enableRobotsTXT = true
   # Off by default.
   robotsAllowAI = false
 
+  # <title> and meta description limits, in characters. The defaults match
+  # Bing Webmaster Tools; 0 turns a limit off. See SEO below.
+  titleMaxLength = 70
+  descriptionMaxLength = 160
+
   # Structured data (JSON-LD). Off unless enable = true; see SEO below.
   [params.schema]
     enable = true
@@ -337,7 +342,8 @@ Broadsheet is built for speed:
 Broadsheet follows SEO best practices:
 
 - **Proper H1 structure** — The site title renders as `<h1>` on the homepage only; inner pages use `<h1>` for the article title
-- **Content-first page titles** — Inner pages use `Article Title | Site` so the `<title>` opens with the same words as the `<h1>`; the homepage uses `Site | tagline`
+- **Content-first page titles** — Inner pages use `Article Title | Site` so the `<title>` opens with the same words as the `<h1>`; the homepage uses `Site | tagline`. Titles stay within `params.titleMaxLength` (default 70, Bing Webmaster Tools' limit): the site name is dropped when there's no room for it, and a headline that is still too long is cut at a word break with "…".
+- **Meta descriptions** — Taken from the page's `description` field, else its summary, else the site's `description` param, and kept within `params.descriptionMaxLength` (default 160). A longer text keeps its opening sentences, or is cut at a word break with "…" when they would be too short. Open Graph, Twitter and JSON-LD keep the full text.
 - **Open Graph tags** — Article images and descriptions are included for social sharing
 - **Twitter Cards** — Large image cards for better visibility when shared
 - **Semantic HTML** — Proper use of `<article>`, `<header>`, `<nav>`, `<footer>`, and `<time>` elements

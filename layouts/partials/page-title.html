@@ -1,0 +1,38 @@
+{{- /*
+  Returns the text for <title>, kept within params.titleMaxLength characters
+  (default 70, the length past which Bing Webmaster Tools reports "Title too
+  long"; 0 turns the guard off).
+
+  Homepage: "Site | tagline", or the site name alone when the pair runs long.
+  Other pages: "Title | Site" when it fits, the title alone when only that
+  fits, and otherwise the title cut at a word break with "…".
+
+  Lengths use strings.RuneCount: len measures bytes (a curly apostrophe is
+  three), and countrunes skips whitespace.
+*/ -}}
+{{- $max := 70 -}}
+{{- if isset site.Params "titlemaxlength" -}}
+  {{- $max = int site.Params.titleMaxLength -}}
+{{- end -}}
+{{- $site := site.Title -}}
+{{- $out := $site -}}
+{{- if .IsHome -}}
+  {{- with site.Params.tagline -}}
+    {{- $pair := printf "%s | %s" $site . -}}
+    {{- if or (eq $max 0) (le (strings.RuneCount $pair) $max) -}}
+      {{- $out = $pair -}}
+    {{- end -}}
+  {{- end -}}
+{{- else -}}
+  {{- with .Title -}}
+    {{- $full := printf "%s | %s" . $site -}}
+    {{- if or (eq $max 0) (le (strings.RuneCount $full) $max) -}}
+      {{- $out = $full -}}
+    {{- else if le (strings.RuneCount .) $max -}}
+      {{- $out = . -}}
+    {{- else -}}
+      {{- $out = partial "trim-to-length.html" (dict "text" . "max" $max) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}

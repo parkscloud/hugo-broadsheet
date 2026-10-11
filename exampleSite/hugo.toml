@@ -18,6 +18,11 @@ buildExpired = false
   # and AI answers. The default robots.txt already allows every crawler.
   robotsAllowAI = false
 
+  # <title> and meta description limits, in characters (defaults shown; they
+  # match Bing Webmaster Tools, and 0 turns a limit off).
+  # titleMaxLength = 70
+  # descriptionMaxLength = 160
+
   # Structured data (JSON-LD) is off by default. To turn it on:
   # [params.schema]
   #   enable = true

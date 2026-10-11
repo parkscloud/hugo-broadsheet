@@ -1,0 +1,16 @@
+{{- /*
+  Cuts .text to at most .max characters at a word break, drops trailing
+  punctuation that would dangle before the ellipsis, and appends "…" (one
+  character, counted within .max). Called by page-title.html and
+  meta-description.html only when the text is longer than .max.
+*/ -}}
+{{- $text := .text -}}
+{{- $max := .max -}}
+{{- $cut := substr $text 0 (sub $max 1) -}}
+{{- $next := substr $text (sub $max 1) 1 -}}
+{{- /* Keep the last word only when the cut fell right at its end. */ -}}
+{{- if not (findRE `^[\s,;:.!?)\]”"]` $next 1) -}}
+  {{- $cut = replaceRE `\s+\S*$` "" $cut -}}
+{{- end -}}
+{{- $cut = replaceRE `[\s,;:.(\[“‘—–-]+$` "" $cut -}}
+{{- return printf "%s…" $cut -}}

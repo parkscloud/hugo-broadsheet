@@ -5,6 +5,29 @@ follows [Semantic Versioning](https://semver.org/) (see the README): `0.x.0`
 introduces new features, `0.x.y` is bug fixes and minor improvements. Release
 history before `0.8.0` is recorded in the git tag list.
 
+## [0.11.0] - 2026-10-11
+
+### Added
+
+- Length limits for `<title>` and the meta description, from two new
+  partials that `head.html` calls: `page-title.html` and
+  `meta-description.html`, with a shared `trim-to-length.html`. The defaults
+  match what Bing Webmaster Tools enforces, 70 and 160 characters counted
+  after HTML entities are decoded. `params.titleMaxLength` and
+  `params.descriptionMaxLength` change them, and 0 turns either guard off.
+- Page title: an inner page reads `Title | Site` when there's room, the
+  title alone when only it fits, and otherwise the title cut at a word break
+  with "…". The homepage keeps `Site | tagline` unless the pair runs long.
+- Meta description: text over the limit keeps its opening sentences when
+  they reach 7/16 of it (70 of 160), and is otherwise cut at a word break
+  with "…". Open Graph, Twitter and JSON-LD keep the full text.
+
+### Changed
+
+- The meta description now falls back to the page summary ahead of the
+  site-wide text, so every article gets its own; previously only a
+  front-matter `description` did.
+
 ## [0.10.0] - 2026-10-11
 
 ### Added

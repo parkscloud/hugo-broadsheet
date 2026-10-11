@@ -1,0 +1,46 @@
+{{- /*
+  Returns the meta description, kept within params.descriptionMaxLength
+  characters (default 160, the length past which Bing Webmaster Tools reports
+  "Meta Description too long"; 0 turns the guard off).
+
+  Source: the page's description, else its summary, else the site
+  description, reduced to plain text so the count matches what search
+  engines read. A longer text keeps the whole sentences that fit, provided
+  they reach 7/16 of the limit (70 of 160); otherwise it is cut at a word
+  break with "…". Only the meta description is shortened: Open Graph,
+  Twitter and JSON-LD keep the full text.
+*/ -}}
+{{- $max := 160 -}}
+{{- if isset site.Params "descriptionmaxlength" -}}
+  {{- $max = int site.Params.descriptionMaxLength -}}
+{{- end -}}
+{{- $src := "" -}}
+{{- with .Description -}}
+  {{- $src = . -}}
+{{- else -}}
+  {{- with .Summary -}}
+    {{- $src = . -}}
+  {{- else -}}
+    {{- $src = site.Params.description -}}
+  {{- end -}}
+{{- end -}}
+{{- $text := $src | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace -}}
+{{- if and (gt $max 0) (gt (strings.RuneCount $text) $max) -}}
+  {{- /* A sentence ends in . ! or ?, plus any closing quote or bracket,
+         followed by a space or the end of the text. */ -}}
+  {{- $kept := "" -}}
+  {{- range findRE `.*?[.!?]["'’”)\]]*(?:\s+|$)` $text -}}
+    {{- $next := printf "%s%s" $kept . -}}
+    {{- if gt (strings.RuneCount (strings.TrimSpace $next)) $max -}}
+      {{- break -}}
+    {{- end -}}
+    {{- $kept = $next -}}
+  {{- end -}}
+  {{- $kept = strings.TrimSpace $kept -}}
+  {{- if ge (strings.RuneCount $kept) (div (mul $max 7) 16) -}}
+    {{- $text = $kept -}}
+  {{- else -}}
+    {{- $text = partial "trim-to-length.html" (dict "text" $text "max" $max) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $text -}}
