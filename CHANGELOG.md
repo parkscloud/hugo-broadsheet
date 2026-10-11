@@ -5,6 +5,20 @@ follows [Semantic Versioning](https://semver.org/) (see the README): `0.x.0`
 introduces new features, `0.x.y` is bug fixes and minor improvements. Release
 history before `0.8.0` is recorded in the git tag list.
 
+## [0.12.0] - 2026-10-11
+
+### Added
+
+- `pageTitle` front matter: when set, `<title>` uses it in place of the
+  headline, under the same length rules, while the heading on the page,
+  Open Graph, Twitter and JSON-LD keep `title`. It gives a one-word
+  headline a fuller search title (Bing reports "Title too short" under 15
+  characters) or replaces the automatic cut on an overlong one.
+- Tag pages name themselves in `<title>` with `params.tagTitleFormat`,
+  default `Posts tagged %s`, so short tag names such as "AI" no longer fall
+  under that minimum; `%s` restores the bare name. The heading on the page
+  is unchanged.
+
 ## [0.11.0] - 2026-10-11
 
 ### Added

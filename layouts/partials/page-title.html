@@ -3,9 +3,15 @@
   (default 70, the length past which Bing Webmaster Tools reports "Title too
   long"; 0 turns the guard off).
 
+  The base is the page's pageTitle front matter when set; on a tag page,
+  params.tagTitleFormat (default "Posts tagged %s"); otherwise the title.
+  The first two give a fuller line to a name or headline too short for
+  search results (Bing reports "Title too short" under 15 characters)
+  without changing the heading on the page.
+
   Homepage: "Site | tagline", or the site name alone when the pair runs long.
-  Other pages: "Title | Site" when it fits, the title alone when only that
-  fits, and otherwise the title cut at a word break with "…".
+  Other pages: "Base | Site" when it fits, the base alone when only that fits,
+  and otherwise the base cut at a word break with "…".
 
   Lengths use strings.RuneCount: len measures bytes (a curly apostrophe is
   three), and countrunes skips whitespace.
@@ -24,7 +30,14 @@
     {{- end -}}
   {{- end -}}
 {{- else -}}
-  {{- with .Title -}}
+  {{- $base := .Title -}}
+  {{- if and (eq .Kind "term") (eq .Data.Plural "tags") -}}
+    {{- $base = printf (site.Params.tagTitleFormat | default "Posts tagged %s") .Title -}}
+  {{- end -}}
+  {{- with .Params.pageTitle -}}
+    {{- $base = . -}}
+  {{- end -}}
+  {{- with $base -}}
     {{- $full := printf "%s | %s" . $site -}}
     {{- if or (eq $max 0) (le (strings.RuneCount $full) $max) -}}
       {{- $out = $full -}}

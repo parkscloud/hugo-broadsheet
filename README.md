@@ -97,6 +97,10 @@ enableRobotsTXT = true
   titleMaxLength = 70
   descriptionMaxLength = 160
 
+  # How a tag page names itself in <title>; %s is the tag. Use "%s" for
+  # the bare name.
+  tagTitleFormat = "Posts tagged %s"
+
   # Structured data (JSON-LD). Off unless enable = true; see SEO below.
   [params.schema]
     enable = true
@@ -173,6 +177,7 @@ tags: ["breaking", "tech"]
 | `author` | Byline (e.g., "By Jane Reporter") |
 | `section` | Section label (e.g., "Technology", "Opinion") |
 | `summary` | Brief description for lists and featured display |
+| `pageTitle` | Optional text for `<title>` in place of the headline; the heading on the page, Open Graph, Twitter and JSON-LD keep `title` |
 | `image` | Featured image path |
 | `imageCaption` | Image caption/credit |
 | `featured` | Set `true` to make this the lead story |
@@ -342,7 +347,7 @@ Broadsheet is built for speed:
 Broadsheet follows SEO best practices:
 
 - **Proper H1 structure** — The site title renders as `<h1>` on the homepage only; inner pages use `<h1>` for the article title
-- **Content-first page titles** — Inner pages use `Article Title | Site` so the `<title>` opens with the same words as the `<h1>`; the homepage uses `Site | tagline`. Titles stay within `params.titleMaxLength` (default 70, Bing Webmaster Tools' limit): the site name is dropped when there's no room for it, and a headline that is still too long is cut at a word break with "…".
+- **Content-first page titles** — Inner pages use `Article Title | Site` so the `<title>` opens with the same words as the `<h1>`; the homepage uses `Site | tagline`. Titles stay within `params.titleMaxLength` (default 70, Bing Webmaster Tools' limit): the site name is dropped when there's no room for it, and a headline that is still too long is cut at a word break with "…". A page's `pageTitle` front matter replaces the headline in `<title>`, which suits a one-word headline (Bing reports "Title too short" under 15 characters), and tag pages read `Posts tagged Name` (`params.tagTitleFormat`).
 - **Meta descriptions** — Taken from the page's `description` field, else its summary, else the site's `description` param, and kept within `params.descriptionMaxLength` (default 160). A longer text keeps its opening sentences, or is cut at a word break with "…" when they would be too short. Open Graph, Twitter and JSON-LD keep the full text.
 - **Open Graph tags** — Article images and descriptions are included for social sharing
 - **Twitter Cards** — Large image cards for better visibility when shared

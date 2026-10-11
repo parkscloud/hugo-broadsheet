@@ -22,6 +22,8 @@ buildExpired = false
   # match Bing Webmaster Tools, and 0 turns a limit off).
   # titleMaxLength = 70
   # descriptionMaxLength = 160
+  # How a tag page names itself in <title> (default shown).
+  # tagTitleFormat = "Posts tagged %s"
 
   # Structured data (JSON-LD) is off by default. To turn it on:
   # [params.schema]
