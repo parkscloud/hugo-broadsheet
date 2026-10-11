@@ -319,6 +319,7 @@ Broadsheet is built for speed:
 Broadsheet follows SEO best practices:
 
 - **Proper H1 structure** — The site title renders as `<h1>` on the homepage only; inner pages use `<h1>` for the article title
+- **Content-first page titles** — Inner pages use `Article Title | Site` so the `<title>` opens with the same words as the `<h1>`; the homepage uses `Site | tagline`
 - **Open Graph tags** — Article images and descriptions are included for social sharing
 - **Twitter Cards** — Large image cards for better visibility when shared
 - **Semantic HTML** — Proper use of `<article>`, `<header>`, `<nav>`, `<footer>`, and `<time>` elements

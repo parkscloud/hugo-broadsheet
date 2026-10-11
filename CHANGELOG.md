@@ -5,6 +5,17 @@ follows [Semantic Versioning](https://semver.org/) (see the README): `0.x.0`
 introduces new features, `0.x.y` is bug fixes and minor improvements. Release
 history before `0.8.0` is recorded in the git tag list.
 
+## [0.9.1] - 2026-10-11
+
+### Changed
+
+- Page titles put the page first and the site name last: `Article Title | Site`
+  instead of `Site | Article Title`. The homepage keeps `Site | tagline`.
+  Search and AI answer engines weigh the opening words of a title, and
+  Microsoft's guidance for Copilot asks for titles that summarize the content
+  and match the on-page headline. When a long title is truncated in results,
+  the cut now falls on the site name rather than the headline.
+
 ## [0.9.0] - 2026-10-11
 
 ### Added
