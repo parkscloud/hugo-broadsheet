@@ -80,9 +80,17 @@ Full configuration example for `hugo.toml`:
 ```toml
 theme = 'broadsheet'
 
+# Generate robots.txt from the theme's template (see SEO below)
+enableRobotsTXT = true
+
 [params]
   # Site tagline (appears below masthead title)
   tagline = "All the news that's fit to print"
+
+  # robots.txt always allows every crawler and lists the sitemap. Set this to
+  # also name the major AI crawlers and say yes to AI training and AI answers.
+  # Off by default.
+  robotsAllowAI = false
 
   # Show reading time on articles
   showReadingTime = true
@@ -315,6 +323,7 @@ Broadsheet follows SEO best practices:
 - **Twitter Cards** — Large image cards for better visibility when shared
 - **Semantic HTML** — Proper use of `<article>`, `<header>`, `<nav>`, `<footer>`, and `<time>` elements
 - **Canonical URLs** — Prevents duplicate content issues
+- **robots.txt** — With `enableRobotsTXT = true`, the theme writes a robots.txt that allows every crawler and lists the sitemap by absolute URL, replacing Hugo's built-in one-line default. Setting `params.robotsAllowAI = true` also names the major search and AI crawlers (GPTBot, OAI-SearchBot, ClaudeBot, Claude-SearchBot, PerplexityBot, Google-Extended, Applebot-Extended, and others) and adds yes signals for search, AI answers, and AI training in two formats: the IETF AI preferences draft's `Content-Usage` and Cloudflare's `Content-Signal`. If the site has `static/llms.txt`, the file points to it. A site can override the whole file with its own `layouts/robots.txt`.
 
 ## Browser Support
 

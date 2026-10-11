@@ -14,6 +14,9 @@ buildExpired = false
   tagline = "All the news that's fit to print"
   showReadingTime = true
   enableSearch = false
+  # Set to true to name AI crawlers in robots.txt and say yes to AI training
+  # and AI answers. The default robots.txt already allows every crawler.
+  robotsAllowAI = false
 
   [[params.footerLinks]]
     name = "About"

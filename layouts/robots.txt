@@ -1,0 +1,55 @@
+{{- /*
+  Broadsheet robots.txt. Hugo renders this template when the site sets
+  enableRobotsTXT = true. Every crawler is allowed and the sitemap is listed.
+
+  Sites that also want to welcome AI systems explicitly can set
+  params.robotsAllowAI = true. That names the major search and AI crawlers in
+  the same group as "*" and adds yes signals for search, AI answers, and AI
+  training (the IETF AI preferences draft's Content-Usage line and
+  Cloudflare's Content-Signal line). It is off by default, so a site grants
+  nothing beyond plain crawling unless it opts in.
+
+  A site can replace this file with its own layouts/robots.txt.
+*/ -}}
+{{- $allowAI := site.Params.robotsAllowAI -}}
+# robots.txt for {{ site.Title }}
+#
+# Every crawler is welcome here, and nothing on this site is blocked.
+{{- if $allowAI }}
+# That includes AI assistants, the search indexes behind them, and AI model
+# training. The named crawlers share one group with "*", so each finds an
+# explicit welcome and all of them follow the same rules. Content-Usage (the
+# IETF AI preferences draft) and Content-Signal (Cloudflare's Content Signals)
+# both say yes to search, AI answers, and AI training.
+{{- end }}
+{{- if fileExists "static/llms.txt" }}
+# Notes for AI systems: {{ "llms.txt" | absURL }}
+{{- end }}
+
+User-agent: *
+{{- if $allowAI }}
+User-agent: Googlebot
+User-agent: Google-Extended
+User-agent: Bingbot
+User-agent: Applebot
+User-agent: Applebot-Extended
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: meta-externalagent
+User-agent: Amazonbot
+User-agent: DuckAssistBot
+User-agent: CCBot
+{{- end }}
+Allow: /
+{{- if $allowAI }}
+Content-Usage: train-ai=y, ai-use=y, search=y
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+{{- end }}
+
+Sitemap: {{ "sitemap.xml" | absURL }}

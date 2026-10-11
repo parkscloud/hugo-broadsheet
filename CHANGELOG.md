@@ -5,6 +5,23 @@ follows [Semantic Versioning](https://semver.org/) (see the README): `0.x.0`
 introduces new features, `0.x.y` is bug fixes and minor improvements. Release
 history before `0.8.0` is recorded in the git tag list.
 
+## [0.9.0] - 2026-10-11
+
+### Added
+
+- A robots.txt template, `layouts/robots.txt`. The example site sets
+  `enableRobotsTXT = true`, but with no template in the theme Hugo fell back to
+  its embedded one-line default, `User-agent: *`, which lists no sitemap.
+  Google Search Console on ap7i.com showed Google fetching exactly that
+  14-byte file. The new template allows every crawler and lists the sitemap
+  by absolute URL, and it points to `llms.txt` when a site has one.
+- `params.robotsAllowAI`, off by default. When true, the robots.txt group also
+  names the major search and AI crawlers and adds yes signals for search, AI
+  answers, and AI training: `Content-Usage` from the IETF AI preferences
+  drafts and `Content-Signal` from Cloudflare's Content Signals. Sites decide
+  for themselves; the theme grants nothing beyond plain crawling unless a site
+  opts in. ap7i.com is the first to turn it on.
+
 ## [0.8.9] - 2026-09-07
 
 ### Fixed
