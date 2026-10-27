@@ -938,10 +938,11 @@ figure {
    -------------------------------------------------------------------------- */
 .pagination {
   display: flex;
+  flex-wrap: wrap; /* long page lists take a second row on phones instead of running off-screen */
   justify-content: center;
   gap: var(--space-sm);
   margin-top: var(--space-2xl);
-  padding-top: var(--space-lg);
+  padding: var(--space-lg) 0 0; /* no list indent, so the row centers under the content */
   border-top: 1px solid var(--color-rule-light);
 }
 

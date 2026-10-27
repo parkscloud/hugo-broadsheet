@@ -5,6 +5,18 @@ follows [Semantic Versioning](https://semver.org/) (see the README): `0.x.0`
 introduces new features, `0.x.y` is bug fixes and minor improvements. Release
 history before `0.8.0` is recorded in the git tag list.
 
+## [0.12.2] - 2026-10-27
+
+### Fixed
+
+- Pagination wraps onto a second row when its links don't fit, instead of
+  running off the screen. On a 390-pixel phone the nine links of a long list
+  need 442 pixels, so the row spilled past both edges and every paginated
+  page scrolled sideways; ap7i.com's new browser check caught it on
+  `/posts/`, `/tags/` and the larger tag pages. The list's default 40-pixel
+  indent is gone as well, so the row centers under the content; on a wide
+  screen it sits 20 pixels further left than before.
+
 ## [0.12.1] - 2026-10-27
 
 ### Fixed
