@@ -5,6 +5,19 @@ follows [Semantic Versioning](https://semver.org/) (see the README): `0.x.0`
 introduces new features, `0.x.y` is bug fixes and minor improvements. Release
 history before `0.8.0` is recorded in the git tag list.
 
+## [0.12.1] - 2026-10-27
+
+### Fixed
+
+- `min_version` is now 0.158.0, up from 0.112.0. The templates read
+  `.Site.Language.Locale`, which arrived with the `locale` setting in Hugo
+  v0.158.0: under v0.157.0 both the example site and ap7i.com stop with
+  "can't evaluate field Locale", and under v0.158.0 both build clean. The
+  README's requirements say the same.
+- `theme.toml` links to the repository under `parkscloud`; its `raparks`
+  URLs returned 404. The author entry and the license's copyright line
+  name Robert Parks.
+
 ## [0.12.0] - 2026-10-11
 
 ### Added

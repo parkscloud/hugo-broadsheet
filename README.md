@@ -22,7 +22,7 @@ A newspaper-style [Hugo](https://gohugo.io/) theme designed for news sites, maga
 
 ## Requirements
 
-- Hugo Extended v0.112.0 or later (required for SCSS/CSS processing)
+- Hugo Extended v0.158.0 or later (Extended for SCSS/CSS processing; that release introduced the `locale` setting the templates read)
 - Git (for submodule installation)
 
 ## Installation
