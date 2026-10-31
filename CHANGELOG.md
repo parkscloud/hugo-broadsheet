@@ -5,6 +5,17 @@ follows [Semantic Versioning](https://semver.org/) (see the README): `0.x.0`
 introduces new features, `0.x.y` is bug fixes and minor improvements. Release
 history before `0.8.0` is recorded in the git tag list.
 
+## [0.12.3] - 2026-10-31
+
+### Changed
+
+- With `params.robotsAllowAI = true`, the robots.txt allow group now names
+  `__usage_ai-training`, explicitly welcoming model training under the
+  [proposed shared convention](https://www.ietf.org/ietf-ftp/internet-drafts/draft-kelley-aipref-training-preference-signal-00.html).
+  Its rules do not treat a wildcard as an expressed preference. The existing
+  crawler entries and affirmative usage signals remain in place; sites that
+  leave the option off keep their previous output.
+
 ## [0.12.2] - 2026-10-27
 
 ### Fixed

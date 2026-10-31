@@ -5,9 +5,9 @@
   Sites that also want to welcome AI systems explicitly can set
   params.robotsAllowAI = true. That names the major search and AI crawlers in
   the same group as "*" and adds yes signals for search, AI answers, and AI
-  training (the IETF AI preferences draft's Content-Usage line and
-  Cloudflare's Content-Signal line). It is off by default, so a site grants
-  nothing beyond plain crawling unless it opts in.
+  training (the IETF AI preferences draft's Content-Usage line,
+  Cloudflare's Content-Signal line, and the proposed __usage_ai-training
+  policy token). These explicit usage preferences are off by default.
 
   A site can replace this file with its own layouts/robots.txt.
 */ -}}
@@ -21,6 +21,7 @@
 # explicit welcome and all of them follow the same rules. Content-Usage (the
 # IETF AI preferences draft) and Content-Signal (Cloudflare's Content Signals)
 # both say yes to search, AI answers, and AI training.
+# The proposed __usage_ai-training token explicitly allows model training.
 {{- end }}
 {{- if fileExists "static/llms.txt" }}
 # Notes for AI systems: {{ "llms.txt" | absURL }}
@@ -45,6 +46,7 @@ User-agent: meta-externalagent
 User-agent: Amazonbot
 User-agent: DuckAssistBot
 User-agent: CCBot
+User-agent: __usage_ai-training
 {{- end }}
 Allow: /
 {{- if $allowAI }}
