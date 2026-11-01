@@ -85,7 +85,7 @@
   {{- with $p }}{{ with .bylines }}{{ $bylines = . }}{{ end }}{{ end }}
   {{- $isPerson := false }}
   {{- if and $p (in $bylines $byline) }}{{ $isPerson = true }}{{ end }}
-  {{- $makers := dict "claude" "Anthropic" "gpt" "OpenAI" "kimi" "Moonshot AI" "grok" "SpaceXAI" "gemini" "Google" "muse" "Meta" "qwen" "Alibaba" }}
+  {{- $makers := dict "claude" "Anthropic" "gpt" "OpenAI" "kimi" "Moonshot AI" "grok" "SpaceXSI" "gemini" "Google" "muse" "Meta" "qwen" "Alibaba" }}
   {{- with $s.aiMakers }}{{ $makers = merge $makers . }}{{ end }}
   {{- $maker := "" }}
   {{- if and $byline (not $isPerson) }}

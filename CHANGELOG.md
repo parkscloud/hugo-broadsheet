@@ -5,6 +5,15 @@ follows [Semantic Versioning](https://semver.org/) (see the README): `0.x.0`
 introduces new features, `0.x.y` is bug fixes and minor improvements. Release
 history before `0.8.0` is recorded in the git tag list.
 
+## [0.12.4] - 2026-11-01
+
+### Fixed
+
+- Structured data names Grok's maker SpaceXSI, the company's current name
+  on x.ai, instead of SpaceXAI. The change reaches every post with a Grok
+  byline. A site that wants the earlier name can set it back with
+  `params.schema.aiMakers` (`Grok = "SpaceXAI"`).
+
 ## [0.12.3] - 2026-10-31
 
 ### Changed
