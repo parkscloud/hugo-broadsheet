@@ -15,6 +15,13 @@
   them with params.schema.aiMakers, e.g. Mistral = "Mistral AI". Any other
   byline is a human author and becomes a Person with that name.
 
+  Assisted posts: a post whose human author drafted it with a model's help
+  can name the model in front matter, assistedBy = ["Claude Opus 5.5"] (a
+  list, or a single string). Each name becomes a contributor, described the
+  same way as an AI byline: an Organization with its maker as
+  parentOrganization when the name starts with a known family. The author
+  stays the byline.
+
   The output is a data block (type="application/ld+json"). Browsers never
   execute it, so a strict script-src CSP does not need to allow it.
 */ -}}
@@ -100,6 +107,23 @@
     {{- $author = dict "@type" "Person" "name" $byline }}
   {{- end }}
 
+  {{- /* Models that helped draft the post (front matter assistedBy) */ -}}
+  {{- $contributors := slice }}
+  {{- with .Params.assistedBy }}
+    {{- $models := . }}
+    {{- if not (reflect.IsSlice $models) }}{{ $models = slice $models }}{{ end }}
+    {{- range $models }}
+      {{- $model := . | string }}
+      {{- $modelMaker := "" }}
+      {{- range $prefix, $name := $makers }}
+        {{- if and (not $modelMaker) (hasPrefix (lower $model) (lower $prefix)) }}{{ $modelMaker = $name }}{{ end }}
+      {{- end }}
+      {{- $c := dict "@type" "Organization" "name" $model }}
+      {{- with $modelMaker }}{{ $c = merge $c (dict "parentOrganization" (dict "@type" "Organization" "name" .)) }}{{ end }}
+      {{- $contributors = $contributors | append $c }}
+    {{- end }}
+  {{- end }}
+
   {{- $article := dict
       "@type" "BlogPosting"
       "@id" (printf "%s#article" .Permalink)
@@ -115,6 +139,7 @@
   }}
   {{- if $byline }}{{ $article = merge $article (dict "author" $author) }}{{ end }}
   {{- if and $p $maker }}{{ $article = merge $article (dict "editor" (dict "@id" $personID)) }}{{ end }}
+  {{- with $contributors }}{{ $article = merge $article (dict "contributor" .) }}{{ end }}
   {{- with $desc }}{{ $article = merge $article (dict "description" .) }}{{ end }}
   {{- with $images }}{{ $article = merge $article (dict "image" .) }}{{ end }}
   {{- with .Params.section }}{{ $article = merge $article (dict "articleSection" .) }}{{ end }}

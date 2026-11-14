@@ -5,6 +5,19 @@ follows [Semantic Versioning](https://semver.org/) (see the README): `0.x.0`
 introduces new features, `0.x.y` is bug fixes and minor improvements. Release
 history before `0.8.0` is recorded in the git tag list.
 
+## [0.13.0] - 2026-11-14
+
+### Added
+
+- Structured data credits AI assistance. A post whose byline wrote it with a
+  model's help can name the model in front matter, `assistedBy =
+  ["Claude Opus 5.5"]` (a list, or one string). The post's `BlogPosting`
+  then lists each model as a `contributor`, typed `Organization` with its
+  maker as `parentOrganization` when the name starts with a known family,
+  the same description an AI byline gets. The byline stays the `author`,
+  and nothing visible on the page changes. Off unless
+  `params.schema.enable` is set, like the rest of the structured data.
+
 ## [0.12.4] - 2026-11-01
 
 ### Fixed

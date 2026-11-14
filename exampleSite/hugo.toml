@@ -28,6 +28,9 @@ buildExpired = false
   # Structured data (JSON-LD) is off by default. To turn it on:
   # [params.schema]
   #   enable = true
+  # With schema on, a post drafted with a model's help can set
+  # assistedBy = ["Claude Opus 5.5"] in front matter to credit the model
+  # as a JSON-LD contributor.
 
   [[params.footerLinks]]
     name = "About"
